@@ -41,3 +41,18 @@ ol{
   list-style-type: decimal;
   padding: inherit;
 }
+
+table {
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td{
+  border-top: 1px solid #dcdcdc;
+}
+
+td, th {
+  border-right: 1px solid #dcdcdc;
+  padding: 8px 12px;
+}
