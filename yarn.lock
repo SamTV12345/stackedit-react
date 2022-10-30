@@ -741,13 +741,6 @@
   dependencies:
     "format" "^0.2.0"
 
-"fault@^2.0.0":
-  "integrity" "sha512-WtySTkS4OKev5JtpHXnib4Gxiurzh5NCGvWrFaZ34m6JehfTUhKZvn9njTfw48t6JumVQOmrKqpmGcdwxnhqBQ=="
-  "resolved" "https://registry.npmjs.org/fault/-/fault-2.0.1.tgz"
-  "version" "2.0.1"
-  dependencies:
-    "format" "^0.2.0"
-
 "fill-range@^7.0.1":
   "integrity" "sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ=="
   "resolved" "https://registry.npmjs.org/fill-range/-/fill-range-7.0.1.tgz"
@@ -882,7 +875,7 @@
     "web-namespaces" "^2.0.0"
     "zwitch" "^2.0.0"
 
-"hast-util-to-text@^3.0.0", "hast-util-to-text@^3.1.0":
+"hast-util-to-text@^3.1.0":
   "integrity" "sha512-7S3mOBxACy8syL45hCn3J7rHqYaXkxRfsX6LXEU5Shz4nt4GxdjtMUtG+T6G/ZLUHd7kslFAf14kAN71bz30xA=="
   "resolved" "https://registry.npmjs.org/hast-util-to-text/-/hast-util-to-text-3.1.1.tgz"
   "version" "3.1.1"
@@ -922,11 +915,6 @@
   "integrity" "sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A=="
   "resolved" "https://registry.npmjs.org/highlight.js/-/highlight.js-10.7.3.tgz"
   "version" "10.7.3"
-
-"highlight.js@~11.6.0":
-  "integrity" "sha512-ig1eqDzJaB0pqEvlPVIpSSyMaO92bH1N2rJpLMN/nX396wTpDA4Eq0uK+7I/2XG17pFaaKE0kjV/XPeGt7Evjw=="
-  "resolved" "https://registry.npmjs.org/highlight.js/-/highlight.js-11.6.0.tgz"
-  "version" "11.6.0"
 
 "hoist-non-react-statics@^3.3.0", "hoist-non-react-statics@^3.3.2":
   "integrity" "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw=="
@@ -1079,15 +1067,6 @@
   dependencies:
     "fault" "^1.0.0"
     "highlight.js" "~10.7.0"
-
-"lowlight@^2.0.0":
-  "integrity" "sha512-RRdrHalFfjpxL91ITTX7KhJYH3QmX5bW9Uie2D2E5GPIR3XBYDYhScBjE291ewFZkStz/k2PN9KC+8deNLiI3Q=="
-  "resolved" "https://registry.npmjs.org/lowlight/-/lowlight-2.7.0.tgz"
-  "version" "2.7.0"
-  dependencies:
-    "@types/hast" "^2.0.0"
-    "fault" "^2.0.0"
-    "highlight.js" "~11.6.0"
 
 "magic-string@^0.26.7":
   "integrity" "sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow=="
@@ -1839,17 +1818,6 @@
   "integrity" "sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw=="
   "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz"
   "version" "0.13.10"
-
-"rehype-highlight@^6.0.0":
-  "integrity" "sha512-q7UtlFicLhetp7K48ZgZiJgchYscMma7XjzX7t23bqEJF8m6/s+viXQEe4oHjrATTIZpX7RG8CKD7BlNZoh9gw=="
-  "resolved" "https://registry.npmjs.org/rehype-highlight/-/rehype-highlight-6.0.0.tgz"
-  "version" "6.0.0"
-  dependencies:
-    "@types/hast" "^2.0.0"
-    "hast-util-to-text" "^3.0.0"
-    "lowlight" "^2.0.0"
-    "unified" "^10.0.0"
-    "unist-util-visit" "^4.0.0"
 
 "rehype-katex@^6.0.2":
   "integrity" "sha512-C4gDAlS1+l0hJqctyiU64f9CvT00S03qV1T6HiMzbSuLBgWUtcqydWHY9OpKrm0SpkK16FNd62CDKyWLwV2ppg=="
