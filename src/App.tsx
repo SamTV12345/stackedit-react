@@ -2,7 +2,6 @@ import MarkdownViewer from "./components/MarkdownViewer";
 import {InputField} from "./components/InputField";
 import "./index.css"
 import {Header} from "./components/Header";
-import {Highlighter} from "./components/Highlighter";
 
 const App = ()=> {
 
