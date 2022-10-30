@@ -14,7 +14,7 @@ export const MarkdownViewer = ()=>{
     const text = useAppSelector(state=>state.commonReducer.text)
 
     return (
-        <ReactMarkdown className="grid-none border-gray-100"
+        <ReactMarkdown className="grid-none border-gray-100 border-2 rounded-2xl mr-6 p-2"
                        children={text}
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex,rehypeRaw]}

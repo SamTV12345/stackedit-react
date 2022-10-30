@@ -287,6 +287,21 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@monaco-editor/loader@^1.3.2":
+  "integrity" "sha512-BTDbpHl3e47r3AAtpfVFTlAi7WXv4UQ/xZmz8atKl4q7epQV5e7+JbigFDViWF71VBi4IIBdcWP57Hj+OWuc9g=="
+  "resolved" "https://registry.npmjs.org/@monaco-editor/loader/-/loader-1.3.2.tgz"
+  "version" "1.3.2"
+  dependencies:
+    "state-local" "^1.0.6"
+
+"@monaco-editor/react@^4.4.6":
+  "integrity" "sha512-Gr3uz3LYf33wlFE3eRnta4RxP5FSNxiIV9ENn2D2/rN8KgGAD8ecvcITRtsbbyuOuNkwbuHYxfeaz2Vr+CtyFA=="
+  "resolved" "https://registry.npmjs.org/@monaco-editor/react/-/react-4.4.6.tgz"
+  "version" "4.4.6"
+  dependencies:
+    "@monaco-editor/loader" "^1.3.2"
+    "prop-types" "^15.7.2"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -461,11 +476,6 @@
     "normalize-range" "^0.1.2"
     "picocolors" "^1.0.0"
     "postcss-value-parser" "^4.2.0"
-
-"babel-plugin-prismjs@^2.1.0":
-  "integrity" "sha512-ehzSKYfeAz4U78zi/sfwsjDPlq0LvDKxNefcZTJ/iKBu+plsHsLqZhUeGf1+82LAcA35UZGbU6ksEx2Utphc/g=="
-  "resolved" "https://registry.npmjs.org/babel-plugin-prismjs/-/babel-plugin-prismjs-2.1.0.tgz"
-  "version" "2.1.0"
 
 "bail@^2.0.0":
   "integrity" "sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw=="
@@ -859,13 +869,6 @@
     "vfile" "^5.0.0"
     "web-namespaces" "^2.0.0"
     "zwitch" "^2.0.0"
-
-"hast-util-sanitize@^4.0.0":
-  "integrity" "sha512-pw56+69jq+QSr/coADNvWTmBPDy+XsmwaF5KnUys4/wM1jt/fZdl7GPxhXXXYdXnz3Gj3qMkbUCH2uKjvX0MgQ=="
-  "resolved" "https://registry.npmjs.org/hast-util-sanitize/-/hast-util-sanitize-4.0.0.tgz"
-  "version" "4.0.0"
-  dependencies:
-    "@types/hast" "^2.0.0"
 
 "hast-util-to-parse5@^7.0.0":
   "integrity" "sha512-YHiS6aTaZ3N0Q3nxaY/Tj98D6kM8QX5Q8xqgg8G45zR7PvWnPGPP0vcKCgb/moIydEJ/QWczVrX0JODCVeoV7A=="
@@ -1540,6 +1543,11 @@
   "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz"
   "version" "1.2.7"
 
+"monaco-editor@>= 0.21.0 < 1", "monaco-editor@>= 0.25.0 < 1":
+  "integrity" "sha512-FKc80TyiMaruhJKKPz5SpJPIjL+dflGvz4CpuThaPMc94AyN7SeC9HQ8hrvaxX7EyHdJcUY5i4D0gNyJj1vSZQ=="
+  "resolved" "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.34.1.tgz"
+  "version" "0.34.1"
+
 "mri@^1.1.0":
   "integrity" "sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA=="
   "resolved" "https://registry.npmjs.org/mri/-/mri-1.2.0.tgz"
@@ -1670,7 +1678,7 @@
     "picocolors" "^1.0.0"
     "source-map-js" "^1.0.2"
 
-"prismjs@^1.18.0", "prismjs@^1.27.0", "prismjs@^1.29.0":
+"prismjs@^1.27.0":
   "integrity" "sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q=="
   "resolved" "https://registry.npmjs.org/prismjs/-/prismjs-1.29.0.tgz"
   "version" "1.29.0"
@@ -1680,7 +1688,7 @@
   "resolved" "https://registry.npmjs.org/prismjs/-/prismjs-1.27.0.tgz"
   "version" "1.27.0"
 
-"prop-types@^15.0.0", "prop-types@^15.8.1":
+"prop-types@^15.0.0", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -1711,7 +1719,7 @@
   "resolved" "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   "version" "5.1.1"
 
-"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^18.2.0":
+"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -1876,15 +1884,6 @@
     "hast-util-raw" "^7.2.0"
     "unified" "^10.0.0"
 
-"rehype-sanitize@^5.0.1":
-  "integrity" "sha512-da/jIOjq8eYt/1r9GN6GwxIR3gde7OZ+WV8pheu1tL8K0D9KxM2AyMh+UEfke+FfdM3PvGHeYJU0Td5OWa7L5A=="
-  "resolved" "https://registry.npmjs.org/rehype-sanitize/-/rehype-sanitize-5.0.1.tgz"
-  "version" "5.0.1"
-  dependencies:
-    "@types/hast" "^2.0.0"
-    "hast-util-sanitize" "^4.0.0"
-    "unified" "^10.0.0"
-
 "remark-gfm@^3.0.1":
   "integrity" "sha512-lEFDoi2PICJyNrACFOfDD3JlLkuSbOa5Wd8EPt06HUdptv8Gn0bxYTdbU/XXQ3swAPkEaGxxPN9cbnMHvVu1Ig=="
   "resolved" "https://registry.npmjs.org/remark-gfm/-/remark-gfm-3.0.1.tgz"
@@ -1995,6 +1994,11 @@
   "integrity" "sha512-ekwEbFp5aqSPKaqeY1PGrlGQxPNaq+Cnx4+bE2D8sciBQrHpbwoBbawqTN2+6jPs9IdWxxiUcN0K2pkczD3zmw=="
   "resolved" "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-2.0.1.tgz"
   "version" "2.0.1"
+
+"state-local@^1.0.6":
+  "integrity" "sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w=="
+  "resolved" "https://registry.npmjs.org/state-local/-/state-local-1.0.7.tgz"
+  "version" "1.0.7"
 
 "style-to-object@^0.3.0":
   "integrity" "sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA=="

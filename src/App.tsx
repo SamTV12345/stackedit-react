@@ -11,8 +11,9 @@ const App = ()=> {
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2">
           <Header/>
           <div className="col-span-2 pl-6">
-              <div className="grid grid-cols-2 h-full gap-2">
-      <InputField/><MarkdownViewer/>
+              <div className="grid grid-cols-2 h-full gap-2 pb-2">
+                  <InputField/>
+                  <MarkdownViewer/>
               </div>
           </div>
       </div>
