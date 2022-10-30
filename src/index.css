@@ -31,3 +31,13 @@ h3{
 p{
   font-size:16px
 }
+
+ul, menu{
+  list-style-type: square;
+  padding: inherit;
+}
+
+ol{
+  list-style-type: decimal;
+  padding: inherit;
+}
