@@ -3,7 +3,7 @@ import {InputField} from "./components/InputField";
 import "./index.css"
 import {Header} from "./components/Header";
 // @ts-ignore
-import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
+import {SettingsMenu} from "./components/SettingsMenu";
 
 const App = ()=> {
 
@@ -18,6 +18,7 @@ const App = ()=> {
                   <MarkdownViewer/>
               </div>
           </div>
+          <SettingsMenu/>
       </div>
   )
 }

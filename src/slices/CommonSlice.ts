@@ -1,11 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 interface CommonSliceProp {
-    text:string
+    text:string,
+    settingsMenuOpen: boolean
 }
 
 const initialState:CommonSliceProp = {
-    text:''
+    text:'',
+    settingsMenuOpen:false
 }
 
 export const commonSlice = createSlice({
@@ -14,6 +16,9 @@ export const commonSlice = createSlice({
     reducers: {
         setText: (state, action) => {
             state.text = action.payload
+        },
+        setSettingsMenuOpen: (state, action)=>{
+            state.settingsMenuOpen  = action.payload
         }
     },
 })
