@@ -1,13 +1,25 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+interface File{
+    value: {
+        name: string,
+        content: string,
+        lastOpened: Date
+    };
+    key: string
+}
+
+
 interface CommonSliceProp {
     text:string,
     settingsMenuOpen: boolean
+    files: File[]
 }
 
 const initialState:CommonSliceProp = {
     text:'',
-    settingsMenuOpen:false
+    settingsMenuOpen:false,
+    files: []
 }
 
 export const commonSlice = createSlice({
@@ -19,8 +31,11 @@ export const commonSlice = createSlice({
         },
         setSettingsMenuOpen: (state, action)=>{
             state.settingsMenuOpen  = action.payload
+        },
+        setFiles: (state, action)=>{
+            state.files = action.payload
         }
-    },
+    }
 })
 
 export const commonReducer =  commonSlice.reducer

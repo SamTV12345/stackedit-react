@@ -7,9 +7,7 @@ import {SettingsMenu} from "./components/SettingsMenu";
 
 const App = ()=> {
 
-
   return (
-
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2">
           <Header/>
           <div className="col-span-2 pl-6 overflow-hidden">
