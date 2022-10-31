@@ -5,16 +5,19 @@ interface MyDB extends DBSchema {
         value: {
             name: string,
             content: string,
-            lastOpened: Date
+            lastOpened: string,
+            id: string
         };
         key: string
         indexes: { 'by-name': string };
     }
 }
 
- export const db = await openDB<MyDB>('my-db', 1, {
+ export const db = await openDB<MyDB>('files', 1, {
         upgrade(db) {
-            const fileStore = db.createObjectStore('file')
+            const fileStore = db.createObjectStore('file', {
+                keyPath:'id'
+            })
             fileStore.createIndex('by-name', 'name');
         }
  })

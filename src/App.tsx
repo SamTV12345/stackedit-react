@@ -4,6 +4,7 @@ import "./index.css"
 import {Header} from "./components/Header";
 // @ts-ignore
 import {SettingsMenu} from "./components/SettingsMenu";
+import {FileViewer} from "./components/FileViewer";
 
 const App = ()=> {
 
@@ -17,6 +18,7 @@ const App = ()=> {
               </div>
           </div>
           <SettingsMenu/>
+          <FileViewer/>
       </div>
   )
 }
