@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   assetsInclude:'**/*.md',
-  base:'/stackedit-react',
+  base:'/stackedit-react/',
+  define:{
+    assetsInclude: ['**/*.gltf']
+  },
   build:{
     target:'esnext'
   }

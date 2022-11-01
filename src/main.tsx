@@ -6,6 +6,11 @@ import "./index.css"
 import {store} from "./store/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {WelcomeScreen} from "./components/WelcomeScreen";
+import {loader} from '@monaco-editor/react'
+import * as monaco from "monaco-editor";
+import {PrivacyPolicy} from "./components/PrivacyPolicy";
+
+loader.config({ monaco});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -13,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <BrowserRouter basename={"/stackedit-react"}>
               <Routes>
                   <Route path={"/app"} element={<App/>}/>
+                  <Route path={"/privacy"} element={<PrivacyPolicy/>}/>
                   <Route path={"/"} element={<WelcomeScreen/>}/>
               </Routes>
           </BrowserRouter>
