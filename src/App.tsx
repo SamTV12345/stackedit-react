@@ -3,13 +3,12 @@ import {InputField} from "./components/InputField";
 import "./index.css"
 import {Header} from "./components/Header";
 // @ts-ignore
-import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
+import {SettingsMenu} from "./components/SettingsMenu";
+import {FileViewer} from "./components/FileViewer";
 
 const App = ()=> {
 
-
   return (
-
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2">
           <Header/>
           <div className="col-span-2 pl-6 overflow-hidden">
@@ -18,6 +17,8 @@ const App = ()=> {
                   <MarkdownViewer/>
               </div>
           </div>
+          <SettingsMenu/>
+          <FileViewer/>
       </div>
   )
 }
