@@ -3,13 +3,13 @@ import {useAppDispatch, useAppSelector} from "../store/hooks";
 import Editor from "@monaco-editor/react";
 import {useSampleFile} from "../hooks/useSampleFile";
 import {db} from "../database/Database";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
 
 export const InputField = ()=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
     const dispatch = useAppDispatch()
-    const [text, setText] = useState<string>('')
+    const text = useAppSelector(state=>state.commonReducer.text)
 
     useDebounce(()=>{
         dispatch(commonActions.setText(text))
@@ -25,21 +25,18 @@ export const InputField = ()=>{
                 }
                 else{
                     db.getAll('file').then(resp=>{
-                        dispatch(commonActions.setCurrentFile(resp.reduce(function (a, b) {
-                            return Date.parse(a.lastOpened) > Date.parse(b.lastOpened) ? a : b; })))
+                        const file = resp.reduce( (a, b) =>{
+                            return a.lastOpened > b.lastOpened ? a : b })
+                        dispatch(commonActions.setCurrentFile(file))
+                        dispatch(commonActions.setEditorText(file.content))
                     })
                 }
             })
     }
     },[])
 
-    useEffect(()=>{
-        if(currentFile && text===''){
-            setText(currentFile)
-        }
-    },[currentFile])
 
-    return <div>{currentFile && <Editor defaultValue={text} language="markdown" options={{wordWrap:'on'}}
-                                        onChange={(e)=>{setText(e as string)}} theme='light'
-                                        className="rounded-2xl border-gray-100 border-2 p-2 outline-0" />}</div>
+    return <div>{text!==undefined&& <Editor value={text} language="markdown" options={{wordWrap:'on'}}
+                                                               onChange={(e)=>{dispatch(commonActions.setEditorText(e as string))}} theme='light'
+                                                               className="rounded-2xl border-gray-100 border-2 p-2 outline-0" />}</div>
 }

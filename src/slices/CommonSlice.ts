@@ -43,6 +43,9 @@ export const commonSlice = createSlice({
         },
         setCurrentFile: (state, action)=>{
             state.currentFile = action.payload
+        },
+        setEditorText: (state, action)=>{
+            state.text = action.payload
         }
     }
 })

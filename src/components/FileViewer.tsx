@@ -1,19 +1,22 @@
 import {db} from "../database/Database";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {useEffect} from "react";
-import {commonActions} from "../slices/CommonSlice";
+import {commonActions, File} from "../slices/CommonSlice";
 import {createPortal} from "react-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faFolderOpen, faPlus} from "@fortawesome/free-solid-svg-icons"
 
 export const FileViewer =()=>{
     const files = useAppSelector(state=>state.commonReducer.files)
     const fileViewerOpen = useAppSelector(state=>state.commonReducer.fileMenuOpen)
     const dispatch = useAppDispatch()
+    const currentFile = useAppSelector(state=>state.commonReducer.currentFile)
 
     useEffect(()=>{
         if(files.length==0){
             db.getAll("file")
                 .then(f=>dispatch(commonActions.setFiles(f)))
-                .catch(c=>console.log("Fehler aufgetreten"))
+                .catch(()=>console.log("Fehler aufgetreten"))
             }
         },[])
 
@@ -25,7 +28,7 @@ export const FileViewer =()=>{
                     <div className="relative rounded-lg shadow bg-gray-700 justify-center w-full md:w-3/4" onClick={(e)=>e.stopPropagation()}>
                         <div className="flex justify-between items-start p-4 rounded-t border-b border-gray-600">
                             <h3 className="text-xl font-semibold text-white">
-                                Dateimanager
+                                Dateimanager {<FontAwesomeIcon icon={faPlus} onClick={()=>{}}/>}
                             </h3>
                             <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-600 hover:text-white" data-modal-toggle="defaultModal" onClick={()=>dispatch(commonActions.setFileMenuOpen(false))}>
                                 <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
@@ -45,13 +48,26 @@ export const FileViewer =()=>{
 
                                 <tbody>
                                 {files.map((f)=>{
-                                    return <tr><td>{f.name}</td>
+                                    return <tr key={f.id}><td>{f.name}</td>
                                                 <td>{f.content.substring(0,10)}</td>
                                     <td>
                                         {f.lastOpened}
                                     </td>
                                         <td>
-
+                                            {currentFile?.id===f.id&&<FontAwesomeIcon icon={faCheck}/>}
+                                            {currentFile?.id!==f.id&&<FontAwesomeIcon icon={faFolderOpen} onClick={()=>{
+                                                db.get("file",f.id).then((f)=>{
+                                                    dispatch(commonActions.setCurrentFile(f))
+                                                    dispatch(commonActions.setEditorText(f?.content))
+                                                    if(f === undefined){
+                                                        console.log("Error file not found")
+                                                        return
+                                                    }
+                                                    // Update time of last open
+                                                    const fileToSave:File = {id:f.id,content:f.content,name:f.name,lastOpened:Date.now().toString()}
+                                                    db.put("file",fileToSave)
+                                                })
+                                            }}/>}
                                         </td>
                                     </tr>
                                 })}

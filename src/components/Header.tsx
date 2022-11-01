@@ -16,6 +16,7 @@ export const Header = ()=>{
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
         <FontAwesomeIcon icon={faFloppyDisk} className="text-white h-8" onClick={()=>{updateFile(currentFile?.id,currentFile?.name,currentFile?.content)}
         }/>
+        <div className="flex-end ml-auto mr-28 text-white">{currentFile.name}</div>
         <div className="flex-end ml-auto mr-2" onClick={()=>{dispatch(commonActions.setSettingsMenuOpen(true))}}>
             <img src={logo} className="w-10" alt="Logo with Settings capability"/></div>
     </div>
