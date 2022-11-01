@@ -10,7 +10,7 @@ import {WelcomeScreen} from "./components/WelcomeScreen";
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
       <Provider store={store}>
-          <BrowserRouter>
+          <BrowserRouter basename={"/stackedit-react"}>
               <Routes>
                   <Route path={"/app"} element={<App/>}/>
                   <Route path={"/"} element={<WelcomeScreen/>}/>
