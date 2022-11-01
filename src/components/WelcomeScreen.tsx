@@ -21,7 +21,7 @@ export const WelcomeScreen = ()=> {
     const scrollTo = useRef<HTMLDivElement>(null)
 
 
-    return <div className="landing">
+    return <div className="landing" id="landing">
         <div className="navigation-bar">
             <a className="navigation-bar__button button" onClick={()=>navigate("/app")} title="The app">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">

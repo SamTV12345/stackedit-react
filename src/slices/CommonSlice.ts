@@ -11,14 +11,16 @@ interface CommonSliceProp {
     text:string,
     settingsMenuOpen: boolean
     files: File[],
-    fileMenuOpen: boolean
+    fileMenuOpen: boolean,
+    currentFile:File|undefined
 }
 
 const initialState:CommonSliceProp = {
     text:'',
     settingsMenuOpen:false,
     files: [],
-    fileMenuOpen: false
+    fileMenuOpen: false,
+    currentFile: undefined
 }
 
 export const commonSlice = createSlice({
@@ -26,7 +28,9 @@ export const commonSlice = createSlice({
     initialState: initialState,
     reducers: {
         setText: (state, action) => {
-            state.text = action.payload
+            if(state.currentFile!==undefined) {
+                state.currentFile.content = action.payload
+            }
         },
         setSettingsMenuOpen: (state, action)=>{
             state.settingsMenuOpen  = action.payload
@@ -36,6 +40,9 @@ export const commonSlice = createSlice({
         },
         setFileMenuOpen: (state, action)=>{
             state.fileMenuOpen  = action.payload
+        },
+        setCurrentFile: (state, action)=>{
+            state.currentFile = action.payload
         }
     }
 })

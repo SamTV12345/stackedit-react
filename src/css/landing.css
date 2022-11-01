@@ -2,11 +2,11 @@ body {
     background-color: #fbfbfb;
 }
 
-* {
+#landing * {
     box-sizing: border-box;
 }
 
-h1 {
+#landing h1 {
     font-weight: 400;
     text-align: center;
     font-size: 2.5em;

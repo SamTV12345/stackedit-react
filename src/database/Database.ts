@@ -1,4 +1,5 @@
 import { openDB, DBSchema } from 'idb';
+import {useSampleFile} from "../hooks/useSampleFile";
 
 interface MyDB extends DBSchema {
     file: {
@@ -16,7 +17,7 @@ interface MyDB extends DBSchema {
  export const db = await openDB<MyDB>('files', 1, {
         upgrade(db) {
             const fileStore = db.createObjectStore('file', {
-                keyPath:'id'
+                keyPath: 'id'
             })
             fileStore.createIndex('by-name', 'name');
         }
