@@ -20,7 +20,7 @@ export const MarkdownViewer = ()=>{
     }
 
     return (
-        <ReactMarkdown className="grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 overflow-auto"
+        <ReactMarkdown className="grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 overflow-auto relative"
                        children={currentFile}
                        components={{
                             code({node, inline, className, children, ...props}) {
