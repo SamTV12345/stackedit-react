@@ -58,7 +58,7 @@ export const FileViewer = () => {
 
 
                                 {files.map((f) => {
-                                    return <FileToggle keyVal={f.id}>
+                                    return <FileToggle keyVal={f.id} key={f.id}>
                                         <div>{f.name}</div>
                                         <div>{f.content.substring(0, 10)}</div>
                                         <div>
