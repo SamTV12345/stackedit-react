@@ -17,4 +17,4 @@ technology to offer a replacement for the original unmaintained project.
 
 # Demo
 
-You can try the current main branch features at [StackEditURL](https://samtv12345.github.io/stackedit-react/).
+You can try the current main branch features at <a href="https://samtv12345.github.io/stackedit-react/" target="_blank">StackEditURL</a>.

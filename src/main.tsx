@@ -4,7 +4,7 @@ import App from './App'
 import {Provider} from "react-redux";
 import "./index.css"
 import {store} from "./store/store";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
 import {WelcomeScreen} from "./components/WelcomeScreen";
 import {loader} from '@monaco-editor/react'
 import * as monaco from "monaco-editor";
@@ -39,13 +39,13 @@ loader.config({ monaco});
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
       <Provider store={store}>
-          <BrowserRouter basename={"/stackedit-react"}>
+          <HashRouter basename={"/"}>
               <Routes>
                   <Route path={"/app"} element={<App/>}/>
                   <Route path={"/privacy"} element={<PrivacyPolicy/>}/>
                   <Route path={"/"} element={<WelcomeScreen/>}/>
               </Routes>
-          </BrowserRouter>
+          </HashRouter>
       </Provider>
   </React.StrictMode>
 )
