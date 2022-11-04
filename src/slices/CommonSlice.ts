@@ -32,6 +32,11 @@ export const commonSlice = createSlice({
                 state.currentFile.content = action.payload
             }
         },
+        setName: (state, action)=>{
+            if(state.currentFile!==undefined) {
+                state.currentFile.name = action.payload
+            }
+        },
         setSettingsMenuOpen: (state, action)=>{
             state.settingsMenuOpen  = action.payload
         },
