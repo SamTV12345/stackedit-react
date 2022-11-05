@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 // @ts-ignore
 import { BlockMath, InlineMath } from 'react-katex';
@@ -11,6 +11,7 @@ import {useAppSelector} from "../store/hooks";
 // @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import remarkMermaid from "remark-mermaidjs";
+import "../css/markdown.css"
 
 export const MarkdownViewer = ()=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)

@@ -5,13 +5,13 @@ import {updateFileName} from "../database/FileLib";
 
 
 
-export const DoubleClickInputField = ()=>{
+export const FileNameInputField = ()=>{
     const [isEditable, setEditable] = useState<boolean>(false)
     const fileName = useAppSelector(state=>state.commonReducer.currentFile?.name)
     const fileId = useAppSelector(state=>state.commonReducer.currentFile?.id)
     const dispatch = useAppDispatch()
 
-    function modifyFileName() {
+    const  modifyFileName = () =>{
         if (fileId === undefined || fileName === undefined) {
             console.log("Error file id unknown")
             return
@@ -21,7 +21,7 @@ export const DoubleClickInputField = ()=>{
     }
 
     return isEditable?<input className="text-black p-1 pl-2 pr-2" onBlur={()=>{
-        modifyFileName();
+        modifyFileName()
     }} onKeyDown={(k)=>k.key==='Enter'&&modifyFileName()} value={fileName} onChange={(v)=>{
         dispatch(commonActions.setName(v.target.value))
     }}/>:<div onDoubleClick={()=>setEditable(true)}>{fileName}</div>

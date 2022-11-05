@@ -5,6 +5,7 @@ export interface File{
     content:string,
     name:string,
     id:string,
+    repo?:string
 }
 
 interface CommonSliceProp {
@@ -51,6 +52,11 @@ export const commonSlice = createSlice({
         },
         setEditorText: (state, action)=>{
             state.text = action.payload
+        },
+        setRepoName: (state, action) => {
+            if(state.currentFile!==undefined) {
+                state.currentFile.repo = action.payload
+            }
         }
     }
 })

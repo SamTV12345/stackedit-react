@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {useAppDispatch} from "../store/hooks";
 import {commonActions} from "../slices/CommonSlice";
+import {UploadType} from "../models/UploadType";
+import {DashboardContent} from "./DashboardContent";
 
 export const Dashboard = ()=>{
     const [selectedItem, setSelectedItem] = useState<number>(0)
@@ -30,16 +32,16 @@ export const Dashboard = ()=>{
                     <div className="grid grid-cols-[auto_1fr]">
                         <div className="w-60 content-center grid place-items-center text-xl">
                             <div className={"w-40 m-2 "}>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(0)}`} onClick={()=>setSelectedItem(0)}>GitHub</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(1)}`} onClick={()=>setSelectedItem(1)}>Gitlab</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(2)}`} onClick={()=>setSelectedItem(2)}>Wordpress</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(3)}`} onClick={()=>setSelectedItem(3)}>Import/Export</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(4)}`} onClick={()=>setSelectedItem(4)}>Zendesk</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(5)}`} onClick={()=>setSelectedItem(5)}>Google Drive</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(6)}`} onClick={()=>setSelectedItem(6)}>DropBox</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.GITHUB)}`} onClick={()=>setSelectedItem(UploadType.GITHUB)}>GitHub</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.GITLAB)}`} onClick={()=>setSelectedItem(UploadType.GITLAB)}>Gitlab</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.WORDPRESS)}`} onClick={()=>setSelectedItem(UploadType.WORDPRESS)}>Wordpress</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.IE)}`} onClick={()=>setSelectedItem(UploadType.IE)}>Import/Export</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.ZENDESK)}`} onClick={()=>setSelectedItem(UploadType.ZENDESK)}>Zendesk</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected((UploadType.GDRIVE))}`} onClick={()=>setSelectedItem(UploadType.GDRIVE)}>Google Drive</div>
+                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.DROPBOX)}`} onClick={()=>setSelectedItem(UploadType.DROPBOX)}>DropBox</div>
                             </div>
                         </div>
-                        <div>content</div>
+                        <DashboardContent selectedItem={selectedItem}/>
                     </div>
                 </div>
             </div>
