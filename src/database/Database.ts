@@ -1,4 +1,5 @@
 import { openDB, DBSchema } from 'idb';
+import {UploadType} from "../models/UploadType";
 
 interface MyDB extends DBSchema {
     file: {
@@ -6,7 +7,8 @@ interface MyDB extends DBSchema {
             name: string,
             content: string,
             lastOpened: string,
-            id: string
+            id: string,
+            repo?:string
         };
         key: string
         indexes: { 'by-name': string };
@@ -18,8 +20,8 @@ interface PushSource extends DBSchema{
         value:{
             username:string,
             password?:string,
-            type: "github"| "gitlab",
-            id: string
+            type: UploadType,
+            id: string,
         },
         key:string
         indexes: {'by-username':string}
