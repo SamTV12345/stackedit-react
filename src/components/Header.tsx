@@ -29,7 +29,7 @@ export const Header = ()=>{
     if(currentFile===undefined){
         return <div>Loading</div>
     }
-    return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full">
+    return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full print:hidden">
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
         <FontAwesomeIcon icon={faFloppyDisk} className="text-white h-8" onClick={()=>{updateFile(currentFile?.id,currentFile?.name,currentFile?.content)}
         }/>

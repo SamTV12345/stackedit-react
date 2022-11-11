@@ -2,6 +2,8 @@ import {FC, useEffect, useState} from "react";
 import {pushStore} from "../database/Database";
 import {UploadType} from "../models/UploadType";
 import {v4} from 'uuid'
+import {useAppDispatch} from "../store/hooks";
+import {commonActions} from "../slices/CommonSlice";
 
 interface DashboardContentProps {
     selectedItem: number
@@ -19,6 +21,7 @@ export interface AccountState {
 }
 export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
     const [accounts, setAccounts] = useState<AccountState>({})
+    const dispatch = useAppDispatch()
 
     useEffect(()=>{
         pushStore.getAll("account").then(res=>{
@@ -63,9 +66,21 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
         </form>
     }
 
+
+    const ImportExportContent = () => {
+        return <div className="flex justify-center items-center h-full">
+            <button className="bg-slate-600 p-4 rounded" onClick={()=>{
+                dispatch(commonActions.setSettingsMenuOpen(false))
+                setTimeout(()=>window.print(),200)
+            }
+            }>Export to PDF (Text selection only in Chrome)</button>
+        </div>
+    }
+
     const Content:FC<DashboardContentProps> = ({selectedItem})=>{
         switch (selectedItem){
             case 0: return <GitHubContent/>
+            case UploadType.IE:return <ImportExportContent/>
         }
         return <div>
 
