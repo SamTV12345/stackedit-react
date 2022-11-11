@@ -39,5 +39,5 @@ export const InputField = ()=>{
 
     return <div>{text!==undefined&& <Editor value={text} language="markdown" options={{wordWrap:'on'}}
                                                                onChange={(e)=>{dispatch(commonActions.setEditorText(e as string))}} theme='light'
-                                                               className="rounded-2xl border-gray-100 border-2 p-2 outline-0" />}</div>
+                                                               className="rounded-2xl border-gray-100 border-2 p-2 outline-0 print:hidden" />}</div>
 }
