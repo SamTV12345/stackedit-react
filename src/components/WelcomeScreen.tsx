@@ -226,7 +226,11 @@ export const WelcomeScreen = ()=> {
                 </a>
             </div>
             <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0"> Apache License</a> –
-            <a onClick={()=>navigate('/privacy')} href="#" target="_blank">Privacy Policy</a>
+            <a href="#" onClick={(event)=>{
+                event.preventDefault();
+
+                navigate('/privacy')
+            }} target="_blank">Privacy Policy</a>
         </div>
     </div>
 }
