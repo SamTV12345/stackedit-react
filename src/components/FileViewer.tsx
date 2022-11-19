@@ -7,6 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faFolderOpen, faPlus} from "@fortawesome/free-solid-svg-icons"
 import {saveFile, updateFile} from "../database/FileLib";
 import {FileToggle} from "./FileToggle";
+import {alertActions, AlertTypes} from "../slices/AlertSlice";
+import {openErrorOpeningFile, openFileCreatedEvent} from "../utils/AlertEvents";
 
 export const FileViewer = () => {
     const files = useAppSelector(state => state.commonReducer.files)
@@ -18,7 +20,11 @@ export const FileViewer = () => {
         if (files.length == 0) {
             db.getAll("file")
                 .then(f => dispatch(commonActions.setFiles(f)))
-                .catch(() => console.log("Fehler aufgetreten"))
+                .catch((e) => {
+                    dispatch(alertActions.setTitle("Error fetching files"))
+                    dispatch(alertActions.setMessage("An error occured when fetching files"))
+                    dispatch(alertActions.setOpen(true))
+                })
         }
     }, [])
 
@@ -34,6 +40,7 @@ export const FileViewer = () => {
                                 Dateimanager {<FontAwesomeIcon icon={faPlus} onClick={() =>
                                 db.count("file").then(c => {
                                     saveFile("# New file", `file${c}`, dispatch, files)
+                                    openFileCreatedEvent(`file${c}`)
                                 })}/>}
                             </h3>
                             <button type="button"
@@ -59,7 +66,7 @@ export const FileViewer = () => {
 
                                 {files.map((f) => {
                                     return <FileToggle keyVal={f.id} key={f.id}>
-                                        <div>{f.name}</div>
+                                        <div>{f.name.substring(0, 10)}</div>
                                         <div>{f.content.substring(0, 10)}</div>
                                         <div>
                                             {new Date(Number(f.lastOpened)).toISOString()}
@@ -67,14 +74,14 @@ export const FileViewer = () => {
                                         <div>
                                             {currentFile?.id === f.id && <FontAwesomeIcon icon={faCheck}/>}
                                             {currentFile?.id !== f.id && <FontAwesomeIcon icon={faFolderOpen} onClick={() => {
-                                                db.get("file", f.id).then((f) => {
-                                                    dispatch(commonActions.setCurrentFile(f))
-                                                    dispatch(commonActions.setEditorText(f?.content))
-                                                    if (f === undefined) {
-                                                        console.log("Error file not found")
+                                                db.get("file", f.id).then((file) => {
+                                                    dispatch(commonActions.setCurrentFile(file))
+                                                    dispatch(commonActions.setEditorText(file?.content))
+                                                    if (file === undefined) {
+                                                        openErrorOpeningFile(f.name)
                                                         return
                                                     }
-                                                   updateFile(f.id,f.content,f.name)
+                                                   updateFile(file.id,file.content,file.name)
                                                 })
                                             }}/>}
                                         </div>
