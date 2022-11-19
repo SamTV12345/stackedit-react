@@ -4,6 +4,7 @@ import {UploadType} from "../models/UploadType";
 import {v4} from 'uuid'
 import {useAppDispatch} from "../store/hooks";
 import {commonActions} from "../slices/CommonSlice";
+import {openGitHubAccountAdded, openGitHubAccountNotAdded} from "../utils/AlertEvents";
 
 interface DashboardContentProps {
     selectedItem: number
@@ -34,6 +35,7 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
 
     const GitHubContent = ()=>{
         const [githubAccount, setGithubAccount] = useState<Account>(()=>{
+
             if(accounts&& accounts[UploadType.GITHUB]!==undefined){
                 return accounts[UploadType.GITHUB] as Account
             }
@@ -61,6 +63,12 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
             <div className="flex justify-end">
                 <button className=" bg-blue-600 p-2 rounded text-black" onClick={()=>{
                     pushStore.put("account",githubAccount)
+                        .then(()=>{
+                            openGitHubAccountAdded(githubAccount.username)
+                        })
+                        .catch(()=>{
+                            openGitHubAccountNotAdded(githubAccount.username)
+                        })
                 }}>Speichern</button>
             </div>
         </form>

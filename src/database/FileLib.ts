@@ -2,6 +2,7 @@ import {v4 as uuidv4} from "uuid";
 import {db} from "./Database";
 import {commonActions, File} from "../slices/CommonSlice";
 import {AppDispatch, store} from "../store/store";
+import {displayFileNotFound, updatedFile, updatedFileErrored, updatedFilename} from "../utils/AlertEvents";
 
 export  const saveFile = (content:string, name:string, dispatch: AppDispatch, files: File[])=>{
         const id = uuidv4()
@@ -25,9 +26,10 @@ export const updateFile =(id:string, name:string,content:string)=>{
                     const currentFiles = store.getState().commonReducer.files
                     const filesWithCurrentIdRemoved = currentFiles.filter(f=>f.id!==id)
                     store.dispatch(commonActions.setFiles([...filesWithCurrentIdRemoved,f]))
-
+                    updatedFile(f.name)
                 })
-        }).catch(()=>console.log("Error"))
+            })
+            .catch(()=>updatedFileErrored(name))
 }
 
 function updateFiles(id: string, f: File) {
@@ -40,13 +42,14 @@ function updateFiles(id: string, f: File) {
 export const updateFileName = (id:string, name:string)=>{
         db.get("file",id).then(f=>{
                 if(f===undefined){
-                        console.log("Not found")
+                        displayFileNotFound(id)
                         return
                 }
                 f.name = name
                 db.put("file",f)
                     .then(()=>{
-                        updateFiles(id, f);
+                        updateFiles(id, f)
+                        updatedFilename(id,f.name)
                     })
         }).catch(()=>console.log("Error"))
 }

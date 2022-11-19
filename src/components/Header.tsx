@@ -17,6 +17,7 @@ export const Header = ()=>{
     const dispatch = useAppDispatch()
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile)
     const [accounts, setAccounts] = useState<AccountState>({})
+    const [animateButton, setAnimateButton] = useState<boolean>(false)
 
     useEffect(()=>{
         pushStore.getAll("account").then(res=>{
@@ -26,13 +27,22 @@ export const Header = ()=>{
         })
     }, [])
 
+    useEffect(()=>{
+           animateButton && setTimeout(()=>setAnimateButton(false),1000)
+        },
+        [animateButton])
+
     if(currentFile===undefined){
         return <div>Loading</div>
     }
+
+
     return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full print:hidden">
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
-        <FontAwesomeIcon icon={faFloppyDisk} className="text-white h-8" onClick={()=>{updateFile(currentFile?.id,currentFile?.name,currentFile?.content)}
-        }/>
+        <FontAwesomeIcon icon={faFloppyDisk} className={`text-white h-8 ${animateButton && 'animate-pulse'} duration-150`}
+                         onClick={()=>{
+                             setAnimateButton(true)
+                             updateFile(currentFile?.id,currentFile?.name,currentFile?.content)}}/>
         <div className="flex-end ml-auto mr-28 text-white"><FileNameInputField/></div>
         <RepoNameInputField/>
         {accounts[UploadType.GITHUB]&&<button onClick={() => {uploadFileToRegistry(accounts[UploadType.GITHUB].password as string,

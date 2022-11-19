@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {commonReducer} from "../slices/CommonSlice";
+import {alertReducer} from "../slices/AlertSlice";
 
 export const store = configureStore({
     reducer: {
-        commonReducer: commonReducer
+        commonReducer: commonReducer,
+        alertReducer
     },
 })
 
