@@ -2,14 +2,16 @@ import MarkdownViewer from "./components/MarkdownViewer";
 import {InputField} from "./components/InputField";
 import "./index.css"
 import {Header} from "./components/Header";
-// @ts-ignore
 import {SettingsMenu} from "./components/SettingsMenu";
 import {FileViewer} from "./components/FileViewer";
+import {Alert} from "./components/Alert";
 import {loader} from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import {Alert} from "./components/Alert";
 
 const App = ()=> {
+
+
+
     const init = async () => {
         const editorWorker = await import("monaco-editor/esm/vs/editor/editor.worker?worker")
         const jsonWorker = await import("monaco-editor/esm/vs/language/json/json.worker?worker")
