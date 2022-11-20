@@ -69,8 +69,8 @@ export const FileViewer = () => {
 
                                 {files.map((f) => {
                                     return <FileToggle keyVal={f.id} key={f.id}>
-                                        <div>{f.name.substring(0, 10)}</div>
-                                        <div>{f.content.substring(0, 10)}</div>
+                                        <div className="truncate">{f.name}</div>
+                                        <div className="truncate">{f.content}</div>
                                         <div>
                                             {new Date(Number(f.lastOpened)).toISOString()}
                                         </div>
