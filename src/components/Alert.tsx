@@ -10,28 +10,38 @@ export const Alert = ()=>{
     const type = useAppSelector(state=>state.alertReducer.type)
     const message = useAppSelector(state=>state.alertReducer.message)
     const title = useAppSelector(state=>state.alertReducer.title)
-    const [color, setColor] = useState<string>('')
+    const [className, setClassname] = useState<string>(`absolute bottom-10 right-10 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded`)
 
-    useEffect(()=>{
+    useEffect(()=> {
         if(open){
             setTimeout(()=>dispatch(alertActions.setOpen(false)),5000)
         }
-    })
+    }, [open]
+    )
 
-    useEffect(()=>{
-        setColor(colorSnackBarCorrect())
-    },[type])
-
-    const colorSnackBarCorrect = ()=>{
+    const colorSnackBarCorrect = (type: AlertTypes)=>{
         switch (type){
             case AlertTypes.ERROR: return 'red'
             case AlertTypes.SUCESS: return 'green'
             case AlertTypes.WARN:return 'orange'
+            default: return "blue"
         }
     }
 
+    useEffect(()=>{
+        if(className.includes('red')){
+            setClassname(className.replaceAll('red', colorSnackBarCorrect(type)))
+        } else if (className.includes('green')){
+            setClassname(className.replaceAll('green', colorSnackBarCorrect(type)))
+        } else if (className.includes('orange')){
+            setClassname(className.replaceAll('orange', colorSnackBarCorrect(type)))
+        }
+    },[type])
+
+
+
     return createPortal(
-        <div className={`${open?'md:block':'hidden'} absolute bottom-10 right-10 bg-${color}-100 border-l-4 border-${color}-500 text-${color}-700 p-4 transition-all fadeOut fadeIn duration-1000`} role="alert">
+        <div className={`${open ? 'md:block' : 'hidden'} ${className}`} role="alert">
             <p className="font-bold">{title}</p>
             <p>{message}</p>
     </div>, document.getElementById('alert') as Element)
