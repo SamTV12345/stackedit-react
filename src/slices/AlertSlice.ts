@@ -4,14 +4,14 @@ export enum AlertTypes {
     ERROR, SUCESS, WARN
 }
 
-interface AlertSlice {
+interface AlertProps {
     open:boolean,
     message: string,
     title:string,
     type: AlertTypes
 }
 
-const initialState:AlertSlice = {
+const initialState:AlertProps = {
     open:false,
     message:'',
     title: '',
@@ -22,17 +22,14 @@ export const alertSlice = createSlice({
     name: 'alertSlice',
     initialState: initialState,
     reducers: {
-    setOpen: (state, action:PayloadAction<boolean>) =>{
-        state.open = action.payload
+        setAlerting:(state, action:PayloadAction<AlertProps>)=>{
+            state.type = action.payload.type
+            state.message = action.payload.message
+            state.open = action.payload.open
+            state.title = action.payload.title
         },
-        setMessage:(state, action:PayloadAction<string>)=>{
-            state.message = action.payload
-        },
-        setTitle: (state, action: PayloadAction<string>)=>{
-            state.title = action.payload
-        },
-        setType: (state, action: PayloadAction<AlertTypes>)=>{
-            state.type = action.payload
+        setOpen: (state, action:PayloadAction<boolean>)=>{
+            state.open = action.payload
         }
     }
 })
