@@ -20,10 +20,13 @@ export const FileViewer = () => {
         if (files.length == 0) {
             db.getAll("file")
                 .then(f => dispatch(commonActions.setFiles(f)))
-                .catch((e) => {
-                    dispatch(alertActions.setTitle("Error fetching files"))
-                    dispatch(alertActions.setMessage("An error occured when fetching files"))
-                    dispatch(alertActions.setOpen(true))
+                .catch(() => {
+                    dispatch(alertActions.setAlerting({
+                        title:"Error fetching files",
+                        type: AlertTypes.ERROR,
+                        open: true,
+                        message: "An error occured when fetching files"
+                    }))
                 })
         }
     }, [])
