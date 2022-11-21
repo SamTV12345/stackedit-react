@@ -44,5 +44,6 @@ export const Alert = ()=>{
         <div className={`${open ? 'md:block' : 'hidden'} ${className}`} role="alert">
             <p className="font-bold">{title}</p>
             <p>{message}</p>
+            <div className="hidden bg-red-100 border-red-500 text-red-700 bg-orange-100 border-orange-500 text-orange-700"/>
     </div>, document.getElementById('alert') as Element)
 }
