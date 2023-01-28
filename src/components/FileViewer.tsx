@@ -9,6 +9,7 @@ import {saveFile, updateFile} from "../database/FileLib";
 import {FileToggle} from "./FileToggle";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {openErrorOpeningFile, openFileCreatedEvent} from "../utils/AlertEvents";
+import {isFile} from "../utils/TypeChecker";
 
 export const FileViewer = () => {
     const files = useAppSelector(state => state.commonReducer.files)
@@ -78,6 +79,7 @@ export const FileViewer = () => {
                                             {currentFile?.id === f.id && <FontAwesomeIcon icon={faCheck}/>}
                                             {currentFile?.id !== f.id && <FontAwesomeIcon icon={faFolderOpen} onClick={() => {
                                                 db.get("file", f.id).then((file) => {
+                                                    if(isFile(file)){
                                                     dispatch(commonActions.setCurrentFile(file))
                                                     dispatch(commonActions.setEditorText(file?.content))
                                                     if (file === undefined) {
@@ -85,8 +87,8 @@ export const FileViewer = () => {
                                                         return
                                                     }
                                                    updateFile(file.id,file.name,file.content)
-                                                })
-                                            }}/>}
+                                                }
+                                            })}}/>}
                                         </div>
                                     </FileToggle>
                                 })}
