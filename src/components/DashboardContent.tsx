@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {pushStore} from "../database/Database";
 import {UploadType} from "../models/UploadType";
 import {useAppDispatch} from "../store/hooks";
@@ -16,12 +16,54 @@ interface Account {
     id: string
 }
 
+type FileItem = {
+    name: string,
+    content: string,
+    json:string
+}
+
+type DragState = "none" | "allowed" | "invalid"
+
 export interface AccountState {
     [key:number]: Account
 }
+
+const fileTypes = ["JPG", "PNG", "GIF"];
+
 export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
     const [accounts, setAccounts] = useState<AccountState>({})
     const dispatch = useAppDispatch()
+    const [files, setFiles] = useState<FileItem[]>([])
+    const [dragState, setDragState] = useState<DragState>("none")
+    const fileInputRef = useRef<HTMLInputElement>(null)
+
+    const readFile = (file: File): Promise<FileItem> => {
+        return new Promise((res, rej) => {
+            const fileItem: FileItem = {
+                name: file.name,
+                content: "",
+                json:''
+            }
+
+            const fr = new FileReader()
+
+            fr.onload = () => {
+                const result = fr.result
+                if (typeof result == "string") {
+                    fileItem.content = result
+                    try {
+                        fileItem.json = JSON.parse(result)
+                    } catch (e) {
+                        console.log(`${file.name} is not JSON.`)
+                    }
+                }
+
+                res(fileItem)
+            }
+
+            fr.readAsText(file)
+        })
+    }
 
     useEffect(()=>{
         pushStore.getAll("account").then(res=>{
@@ -31,6 +73,54 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
         })
     }, [])
 
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault()
+        e.dataTransfer.dropEffect = "copy"
+    }
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault()
+
+        console.log(e)
+
+        const fileList: Promise<FileItem>[] = []
+        for (const f of e.dataTransfer.files) {
+            console.log("Test", f)
+            fileList.push(readFile(f))
+        }
+
+        console.log("Here", fileList)
+
+        Promise.all(fileList).then(e => {
+            const files=e.map(c=>c.content)
+            console.log(files)
+            setFiles(e)
+        })
+        setDragState("none")
+    }
+
+    const handleInputChanged = (e: any) => {
+        console.log(e)
+        uploadFiles(e.target.files)
+    }
+    const handleClick = () => {
+        fileInputRef.current?.click()
+    }
+
+    const uploadFiles = (files: FileList) => {
+        const fileList: Promise<FileItem>[] = []
+        for (const f of files) {
+            console.log("Test", f)
+            fileList.push(readFile(f))
+        }
+
+        console.log("Here", fileList)
+
+        Promise.all(fileList).then(e => {
+            console.log("Foo", e)
+            setFiles(e)
+        })
+    }
 
     const GitHubContent = ()=>{
         const [githubAccount, setGithubAccount] = useState<Account>(()=>{
@@ -73,9 +163,26 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
         </form>
     }
 
-
+    const handleDropColor =()=> {
+        switch (dragState) {
+            case "none":
+                return "border-double"
+            case "allowed":
+                return "border-dashed"
+            case "invalid":
+                return "border-solid border-red-500"
+        }
+    }
     const ImportExportContent = () => {
-        return <div className="flex justify-center items-center h-full">
+        return <div className="flex flex-col justify-center items-center h-full gap-4">
+            <div className={`p-4 border-4 ${handleDropColor()} border-dashed border-gray-500 text-center w-full h-40 grid place-items-center cursor-pointer`}
+                 onDragEnter={() => setDragState("allowed")}
+                 onDragLeave={() => setDragState("none")}
+                 onDragOver={handleDragOver} onDrop={handleDrop}
+                    onClick={handleClick}>
+                Drag file here.
+            </div>
+            <input type={"file"} ref={fileInputRef} hidden onChange={handleInputChanged} accept="application/json" multiple />
             <button className="bg-slate-600 p-4 rounded" onClick={()=>{
                 dispatch(commonActions.setSettingsMenuOpen(false))
                 setTimeout(()=>window.print(),200)

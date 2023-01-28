@@ -11,6 +11,7 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import remarkMermaid from 'remark-mermaidjs';
 import "../css/markdown.css"
 import { remark } from 'remark';
+import {Spinner} from "./Spinner";
 
 export const MarkdownViewer = ()=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
@@ -23,7 +24,7 @@ export const MarkdownViewer = ()=>{
 
     },[])
     if(currentFile === undefined){
-        return <div>Loading</div>
+        return <Spinner/>
     }
 
     const handle =  (node: any, error: string, file: any):any =>{
