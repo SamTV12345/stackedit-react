@@ -1,13 +1,14 @@
 import {db} from "./Database";
 import {commonActions, File} from "../slices/CommonSlice";
-import {AppDispatch, store} from "../store/store";
+import {store} from "../store/store";
 import {displayFileNotFound, updatedFile, updatedFileErrored, updatedFilename} from "../utils/AlertEvents";
+import {alertActions, AlertTypes} from "../slices/AlertSlice";
 
-export  const saveFile = (content:string, name:string, dispatch: AppDispatch, files: File[])=>{
+export  const saveFile = (content:string, name:string)=>{
         const id = crypto.randomUUID()
-        const fileToSave = {lastOpened:Date.now().toString(),content, name,id, repo:"Your repo"}
+        const fileToSave = {lastOpened: new Date().toISOString(),content, name,id, repo:"Your repo"}
         db.put("file",fileToSave)
-            .then(()=>dispatch(commonActions.setFiles([...files,fileToSave])))
+            .then(()=>store.dispatch(commonActions.setFiles([...store.getState().commonReducer.files,fileToSave])))
             .catch(e=>console.log(e))
         return fileToSave
 }
@@ -20,7 +21,7 @@ export const updateFile =(id:string, name:string,content:string)=>{
                 }
                 f.content= content
                 f.name = name
-                f.lastOpened = Date.now().toString()
+                f.lastOpened = new Date().toISOString()
                 db.put("file",f).then(()=>{
                     const currentFiles = store.getState().commonReducer.files
                     const filesWithCurrentIdRemoved = currentFiles.filter(f=>f.id!==id)
@@ -53,6 +54,10 @@ export const updateFileName = (id:string, name:string)=>{
         }).catch(()=>console.log("Error"))
 }
 
+export const findFileById = (id:string)=>{
+    return db.get("file",id)
+}
+
 export const updateRepoName = (id:string, repoName:string)=>{
     db.get("file",id)
         .then(f=>{
@@ -76,4 +81,24 @@ export const deleteFile = (id:string)=>{
                     store.dispatch(commonActions.setFiles(filesWithCurrentIdRemoved))
 
             })
+}
+
+export const importAndOverrideFile = (file: File)=>{
+    console.log(file)
+    findFileById(file.id)
+        .then(f=>{
+            if(f===undefined){
+                return
+            }
+            console.log(file.id)
+            updateFile(file.id,file.name,file.content)
+            const currentFileId = store.getState().commonReducer.currentFile?.id
+            if(currentFileId===f.id) {
+                store.dispatch(commonActions.setEditorText(file.content))
+                store.dispatch(commonActions.setText(file.content))
+                store.dispatch(commonActions.setCurrentFile(file))
+            }
+            store.dispatch(alertActions.setAlerting({open: true,type: AlertTypes.SUCESS,message: "File imported successfully",title:"Imported succesfully"}))
+            store.dispatch(alertActions.setOpen(true))
+        })
 }

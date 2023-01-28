@@ -1,8 +1,6 @@
 import {FC, useEffect, useRef, useState} from "react";
 import {pushStore} from "../database/Database";
 import {UploadType} from "../models/UploadType";
-import {useAppDispatch} from "../store/hooks";
-import {commonActions} from "../slices/CommonSlice";
 import {openGitHubAccountAdded, openGitHubAccountNotAdded} from "../utils/AlertEvents";
 import {ImportExportContent} from "./ImportExportContent";
 

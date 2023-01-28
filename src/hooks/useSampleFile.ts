@@ -7,9 +7,7 @@ import {commonActions} from "../slices/CommonSlice";
 export const useSampleFile =()=>{
 
     fetch(markdownSample).then((response) => response.text()).then((text) => {
-        const file = saveFile(text,"Example.md",
-        store.dispatch,
-        store.getState().commonReducer.files)
+        const file = saveFile(text,"Example.md")
         store.dispatch(commonActions.setCurrentFile(file))
         store.dispatch(commonActions.setEditorText(file.content))
     })
