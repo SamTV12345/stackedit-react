@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
-// @ts-ignore
-import { BlockMath, InlineMath } from 'react-katex';
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -13,8 +11,6 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import remarkMermaid from 'remark-mermaidjs';
 import "../css/markdown.css"
 import { remark } from 'remark';
-import {BlockContent, Code} from "mdast";
-import {VFile} from "vfile";
 
 export const MarkdownViewer = ()=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
@@ -30,7 +26,7 @@ export const MarkdownViewer = ()=>{
         return <div>Loading</div>
     }
 
-    const handle =  (node: Code, error: string, file: VFile):BlockContent =>{
+    const handle =  (node: any, error: string, file: any):any =>{
         console.log(error)
         console.log(node.position)
         node.value=error
