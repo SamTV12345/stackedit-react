@@ -42,7 +42,7 @@ export const FileViewer = () => {
                             <h3 className="text-xl font-semibold text-white">
                                 Dateimanager {<FontAwesomeIcon icon={faPlus} onClick={() =>
                                 db.count("file").then(c => {
-                                    saveFile("# New file", `file${c}`, dispatch, files)
+                                    saveFile("# New file", `file${c}`)
                                     openFileCreatedEvent(`file${c}`)
                                 })}/>}
                             </h3>
@@ -72,7 +72,7 @@ export const FileViewer = () => {
                                         <div className="truncate">{f.name}</div>
                                         <div className="truncate">{f.content}</div>
                                         <div>
-                                            {new Date(Number(f.lastOpened)).toISOString()}
+                                            {f.lastOpened}
                                         </div>
                                         <div>
                                             {currentFile?.id === f.id && <FontAwesomeIcon icon={faCheck}/>}

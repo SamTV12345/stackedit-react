@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface File{
     lastOpened: string,
@@ -28,29 +28,29 @@ export const commonSlice = createSlice({
     name: 'commonSlice',
     initialState: initialState,
     reducers: {
-        setText: (state, action) => {
+        setText: (state, action:PayloadAction<string>) => {
             if(state.currentFile!==undefined) {
                 state.currentFile.content = action.payload
             }
         },
-        setName: (state, action)=>{
+        setName: (state, action: PayloadAction<string>)=>{
             if(state.currentFile!==undefined) {
                 state.currentFile.name = action.payload
             }
         },
-        setSettingsMenuOpen: (state, action)=>{
+        setSettingsMenuOpen: (state, action: PayloadAction<boolean>)=>{
             state.settingsMenuOpen  = action.payload
         },
-        setFiles: (state, action)=>{
+        setFiles: (state, action:PayloadAction<File[]>)=>{
             state.files = action.payload
         },
-        setFileMenuOpen: (state, action)=>{
+        setFileMenuOpen: (state, action:PayloadAction<boolean>)=>{
             state.fileMenuOpen  = action.payload
         },
-        setCurrentFile: (state, action)=>{
+        setCurrentFile: (state, action:PayloadAction<File>)=>{
             state.currentFile = action.payload
         },
-        setEditorText: (state, action)=>{
+        setEditorText: (state, action:PayloadAction<string>)=>{
             state.text = action.payload
         },
         setRepoName: (state, action) => {

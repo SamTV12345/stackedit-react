@@ -5,6 +5,7 @@ import {useSampleFile} from "../hooks/useSampleFile";
 import {db} from "../database/Database";
 import {useEffect} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
+import {Spinner} from "./Spinner";
 
 
 export const InputField = ()=>{
@@ -22,7 +23,7 @@ export const InputField = ()=>{
             .then(c=> {
                 if (c === 0) {
                     useSampleFile()
-                    return <div>Loading</div>
+                    return <Spinner/>
                 }
                 else{
                     db.getAll('file').then(resp=>{

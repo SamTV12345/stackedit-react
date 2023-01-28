@@ -1,9 +1,8 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {pushStore} from "../database/Database";
 import {UploadType} from "../models/UploadType";
-import {useAppDispatch} from "../store/hooks";
-import {commonActions} from "../slices/CommonSlice";
 import {openGitHubAccountAdded, openGitHubAccountNotAdded} from "../utils/AlertEvents";
+import {ImportExportContent} from "./ImportExportContent";
 
 interface DashboardContentProps {
     selectedItem: number
@@ -16,12 +15,15 @@ interface Account {
     id: string
 }
 
+
 export interface AccountState {
     [key:number]: Account
 }
+
+
+
 export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
     const [accounts, setAccounts] = useState<AccountState>({})
-    const dispatch = useAppDispatch()
 
     useEffect(()=>{
         pushStore.getAll("account").then(res=>{
@@ -71,17 +73,6 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
                 }}>Speichern</button>
             </div>
         </form>
-    }
-
-
-    const ImportExportContent = () => {
-        return <div className="flex justify-center items-center h-full">
-            <button className="bg-slate-600 p-4 rounded" onClick={()=>{
-                dispatch(commonActions.setSettingsMenuOpen(false))
-                setTimeout(()=>window.print(),200)
-            }
-            }>Export to PDF (Text selection only in Chrome)</button>
-        </div>
     }
 
     const Content:FC<DashboardContentProps> = ({selectedItem})=>{
