@@ -1,11 +1,10 @@
-import {v4 as uuidv4} from "uuid";
 import {db} from "./Database";
 import {commonActions, File} from "../slices/CommonSlice";
 import {AppDispatch, store} from "../store/store";
 import {displayFileNotFound, updatedFile, updatedFileErrored, updatedFilename} from "../utils/AlertEvents";
 
 export  const saveFile = (content:string, name:string, dispatch: AppDispatch, files: File[])=>{
-        const id = uuidv4()
+        const id = crypto.randomUUID()
         const fileToSave = {lastOpened:Date.now().toString(),content, name,id, repo:"Your repo"}
         db.put("file",fileToSave)
             .then(()=>dispatch(commonActions.setFiles([...files,fileToSave])))

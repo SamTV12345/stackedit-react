@@ -1,7 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {pushStore} from "../database/Database";
 import {UploadType} from "../models/UploadType";
-import {v4} from 'uuid'
 import {useAppDispatch} from "../store/hooks";
 import {commonActions} from "../slices/CommonSlice";
 import {openGitHubAccountAdded, openGitHubAccountNotAdded} from "../utils/AlertEvents";
@@ -39,7 +38,7 @@ export const DashboardContent:FC<DashboardContentProps> =({selectedItem})=>{
             if(accounts&& accounts[UploadType.GITHUB]!==undefined){
                 return accounts[UploadType.GITHUB] as Account
             }
-            return {username:'',password:'',id:v4.toString(),type:UploadType.GITHUB}
+            return {username:'',password:'',id:crypto.randomUUID(),type:UploadType.GITHUB}
         })
 
         return <form className="grid grid-cols-1">

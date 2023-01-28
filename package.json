@@ -33,14 +33,12 @@
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
-    "remark-mermaidjs": "^4.1.1",
-    "uuid": "^9.0.0"
+    "remark-mermaidjs": "^4.1.1"
   },
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "@types/uuid": "^9.0.0",
     "@vitejs/plugin-react": "^3.0.1",
     "autoprefixer": "^10.4.13",
     "npm-check-updates": "^16.6.2",
