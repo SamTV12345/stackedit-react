@@ -6,7 +6,7 @@ import {displayFileNotFound, updatedFile, updatedFileErrored, updatedFilename} f
 
 export  const saveFile = (content:string, name:string, dispatch: AppDispatch, files: File[])=>{
         const id = uuidv4()
-        const fileToSave = {lastOpened:Date.now().toString(),content:content, name,id:id, repo:"Your repo"}
+        const fileToSave = {lastOpened:Date.now().toString(),content, name,id, repo:"Your repo"}
         db.put("file",fileToSave)
             .then(()=>dispatch(commonActions.setFiles([...files,fileToSave])))
             .catch(e=>console.log(e))

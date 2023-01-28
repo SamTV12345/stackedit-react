@@ -84,7 +84,7 @@ export const FileViewer = () => {
                                                         openErrorOpeningFile(f.name)
                                                         return
                                                     }
-                                                   updateFile(file.id,file.content,file.name)
+                                                   updateFile(file.id,file.name,file.content)
                                                 })
                                             }}/>}
                                         </div>

@@ -28,7 +28,7 @@ export const FileToggle:FC<FileToggleProps> = ({children, keyVal})=>{
             <MenuItem className="bg-slate-900	 list-none p-2  grid-none" onClick={()=>
                 deleteFile(keyVal)
             }>
-                <FontAwesomeIcon icon={faTrash} className="text-red text-2xl"/>Delete
+                <FontAwesomeIcon icon={faTrash} className=" w-6 text-red text-2xl"/>Delete
             </MenuItem>
         </ControlledMenu>
     </div>
