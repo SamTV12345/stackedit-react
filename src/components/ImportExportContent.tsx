@@ -6,6 +6,7 @@ import {findFileById, importAndOverrideFile, saveFile} from "../database/FileLib
 import {isFile} from "../utils/TypeChecker";
 import {OkButton} from "./OkButton";
 import {DangerButton} from "./DangerButton";
+import {AlternativeButton} from "./AlternativeButton";
 
 export const ImportExportContent = () => {
     const dispatch = useAppDispatch()
@@ -62,7 +63,6 @@ export const ImportExportContent = () => {
                         }
                         await findFileById(fileItem.json.id).then(e => {
                             fileItem.exists = e != null
-                            console.log(fileItem)
                             res(fileItem)
                         })
 
@@ -116,7 +116,16 @@ export const ImportExportContent = () => {
     }
 
     const addFileToDatabase = (json: MyFile)=>{
-        saveFile(json.content, json.name)
+        saveFile(json.content, json.name, json.id,json.lastOpened)
+        files.forEach(async f=>{
+            await findFileById(f.json.id).then(e => {
+                f.exists = e != null
+                const filteredFiles = files.filter(e=>e.json.id!=f.json.id)
+                const filesToSet = [...filteredFiles,f]
+                setFiles(filesToSet)
+            })
+        })
+        dispatch(alertActions.setAlerting({open: true,type:AlertTypes.SUCESS,message:`${json.name} imported successfully`,title:"Import success"}))
     }
 
     return <div className="flex flex-col justify-center items-center h-full gap-4">
@@ -131,7 +140,11 @@ export const ImportExportContent = () => {
             {files.filter(f=> isFile(f.json)).map((f, i) => {
                     return <div className="grid grid-cols-3 gap-3 items-stretch" key={i}>
                         <div className="text-lg px-5 py-3">{f.name}</div>
-                        <OkButton onClick={()=>addFileToDatabase(f.json)}>Import</OkButton>
+                        <OkButton onClick={()=>addFileToDatabase(f.json)} hide={!f.exists}>Import</OkButton>
+                        <AlternativeButton onClick={()=>{
+                            f.json.id = crypto.randomUUID()
+                            addFileToDatabase(f.json)
+                        }} hide={f.exists}>Save as copy</AlternativeButton>
                         <DangerButton hide={f.exists}
                                 onClick={()=>importAndOverrideFile(f.json)}>Override</DangerButton>
                     </div>

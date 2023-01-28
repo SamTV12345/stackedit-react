@@ -4,9 +4,10 @@ import {store} from "../store/store";
 import {displayFileNotFound, updatedFile, updatedFileErrored, updatedFilename} from "../utils/AlertEvents";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 
-export  const saveFile = (content:string, name:string)=>{
-        const id = crypto.randomUUID()
-        const fileToSave = {lastOpened: new Date().toISOString(),content, name,id, repo:"Your repo"}
+export  const saveFile = (content:string, name:string, optionalId?:string, optionalDate?:string)=>{
+        const id = optionalId?optionalId:crypto.randomUUID()
+        const lastOpened = optionalDate?optionalDate:new Date().toISOString()
+        const fileToSave = {lastOpened,content, name,id, repo:"Your repo"}
         db.put("file",fileToSave)
             .then(()=>store.dispatch(commonActions.setFiles([...store.getState().commonReducer.files,fileToSave])))
             .catch(e=>console.log(e))

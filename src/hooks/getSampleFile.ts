@@ -4,7 +4,7 @@ import {saveFile} from "../database/FileLib";
 import {store} from "../store/store";
 import {commonActions} from "../slices/CommonSlice";
 
-export const useSampleFile =()=>{
+export const getSampleFile =()=>{
 
     fetch(markdownSample).then((response) => response.text()).then((text) => {
         const file = saveFile(text,"Example.md")
