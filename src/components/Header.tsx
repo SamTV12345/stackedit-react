@@ -12,7 +12,6 @@ import {UploadType} from "../models/UploadType";
 import {uploadFileToRegistry} from "../utils/GithubUtils";
 import {RepoNameInputField} from "./RepoNameInputField";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
-import {Spinner} from "./Spinner";
 
 
 export const Header = ()=>{
@@ -68,12 +67,14 @@ export const Header = ()=>{
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
         <div onClick={()=>{
             navigator.clipboard.writeText(currentFile?.content)
-            dispatch(alertActions.setAlerting({
-                open: true,
-                type: AlertTypes.SUCESS,
-                title: "Content copied to clipboard",
-                message: `Your content is now copied to your clipboard.`
-            }))
+                .then(()=>{
+                    dispatch(alertActions.setAlerting({
+                        open: true,
+                        type: AlertTypes.SUCESS,
+                        title: "Content copied to clipboard",
+                        message: `Your content is now copied to your clipboard.`
+                    }))
+                })
             dispatch(alertActions.setOpen(true))
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-10 h-10 cursor-pointer">

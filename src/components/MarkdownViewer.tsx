@@ -27,7 +27,7 @@ export const MarkdownViewer = ()=>{
         return <Spinner/>
     }
 
-    const handle =  (node: any, error: string, file: any):any =>{
+    const handle =  (node: any, error: string):any =>{
         console.log(error)
         console.log(node.position)
         node.value=error
@@ -59,4 +59,4 @@ export const MarkdownViewer = ()=>{
         />)
 
 }
-export default MarkdownViewer;
+export default MarkdownViewer

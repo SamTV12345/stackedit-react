@@ -2,7 +2,7 @@ import {commonActions, File as MyFile} from "../slices/CommonSlice";
 import {useAppDispatch} from "../store/hooks";
 import {useRef, useState} from "react";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
-import {findFileById, importAndOverrideFile, saveFile, updateFile} from "../database/FileLib";
+import {findFileById, importAndOverrideFile, saveFile} from "../database/FileLib";
 import {isFile} from "../utils/TypeChecker";
 import {OkButton} from "./OkButton";
 import {DangerButton} from "./DangerButton";
@@ -92,7 +92,6 @@ export const ImportExportContent = () => {
 
 
         Promise.all(fileList).then(e => {
-            const files=e.map(c=>c.content)
             setFiles(e)
         })
         setDragState("none")
