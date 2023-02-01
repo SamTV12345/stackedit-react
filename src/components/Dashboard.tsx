@@ -16,7 +16,7 @@ export const Dashboard = ()=>{
     }
 
     return <div id="defaultModal" tabIndex={-1} aria-hidden="true"
-                className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full z-40" onClick={()=>dispatch(commonActions.setSettingsMenuOpen(false))}>
+                className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 md:inset-0 h-modal md:h-full z-40" onClick={()=>dispatch(commonActions.setSettingsMenuOpen(false))}>
         <div className="grid place-items-center h-screen">
             <div className="relative rounded-lg shadow bg-gray-700 justify-center w-full md:w-3/4" onClick={(e)=>e.stopPropagation()}>
                 <div className="flex justify-between items-start p-4 rounded-t border-b border-gray-600">

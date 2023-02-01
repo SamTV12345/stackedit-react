@@ -1,7 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
-// @ts-ignore
-import { BlockMath, InlineMath } from 'react-katex';
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -10,14 +8,30 @@ import rehypeKatex from "rehype-katex";
 import {useAppSelector} from "../store/hooks";
 // @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import remarkMermaid from "remark-mermaidjs";
+import remarkMermaid from 'remark-mermaidjs';
 import "../css/markdown.css"
+import { remark } from 'remark';
+import {Spinner} from "./Spinner";
 
 export const MarkdownViewer = ()=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
 
+
+    useEffect(()=>{
+        remark().use(remarkMermaid).process(currentFile, (err, file) => {
+            console.log(String(file))
+        })
+
+    },[])
     if(currentFile === undefined){
-        return <div>Loading</div>
+        return <Spinner/>
+    }
+
+    const handle =  (node: any, error: string):any =>{
+        console.log(error)
+        console.log(node.position)
+        node.value=error
+        return node.value==="mermaid"?{type:"html",value:''}:node
     }
 
     return (
@@ -40,9 +54,9 @@ export const MarkdownViewer = ()=>{
                                )
                            }
                        }}
-                           remarkPlugins={[remarkMath, remarkGfm, remarkMermaid]}
+                           remarkPlugins={[remarkMath, remarkGfm, [remarkMermaid, { onError : 'fallback', errorFallback:handle }]]}
             rehypePlugins={[rehypeKatex,rehypeRaw]}
         />)
 
 }
-export default MarkdownViewer;
+export default MarkdownViewer

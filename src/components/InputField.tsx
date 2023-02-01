@@ -1,10 +1,11 @@
 import {commonActions} from "../slices/CommonSlice";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import Editor from "@monaco-editor/react";
-import {useSampleFile} from "../hooks/useSampleFile";
+import {getSampleFile} from "../hooks/getSampleFile";
 import {db} from "../database/Database";
 import {useEffect} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
+import {Spinner} from "./Spinner";
 
 
 export const InputField = ()=>{
@@ -21,8 +22,8 @@ export const InputField = ()=>{
         db.count('file')
             .then(c=> {
                 if (c === 0) {
-                    useSampleFile()
-                    return <div>Loading</div>
+                    getSampleFile()
+                    return <Spinner/>
                 }
                 else{
                     db.getAll('file').then(resp=>{

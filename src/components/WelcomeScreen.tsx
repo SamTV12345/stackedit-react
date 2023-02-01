@@ -20,7 +20,6 @@ export const WelcomeScreen = ()=> {
     const navigate = useNavigate()
     const scrollTo = useRef<HTMLDivElement>(null)
 
-
     return <div className="landing" id="landing">
         <div className="navigation-bar">
             <a className="navigation-bar__button button" onClick={()=>navigate("/app")} title="The app">
