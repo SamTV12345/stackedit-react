@@ -14,7 +14,7 @@ import abc from '../css/abc.png'
 import tweemoji from '../css/twemoji.png'
 
 import "../css/landing.css"
-import {useRef} from "react";
+import React, {useRef} from "react";
 
 export const WelcomeScreen = ()=> {
     const navigate = useNavigate()
