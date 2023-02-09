@@ -15,7 +15,7 @@ import tweemoji from '../css/twemoji.png'
 
 import "../css/landing.css"
 import React, {useRef} from "react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 export const WelcomeScreen = ()=> {
     const navigate = useNavigate()
@@ -87,8 +87,7 @@ export const WelcomeScreen = ()=> {
                 <div className="column">
                     <div className="feature">
                         <h3>{t('smart-layout')}</h3>
-                        <p>Whether you write, you review, you comment… StackEdit's layout provides you with the
-                            flexibility you need, without sacrifice.</p>
+                        <p><Trans t={t}>smart-layout-explanation</Trans></p>
                     </div>
                 </div>
                 <div className="column">
@@ -97,20 +96,17 @@ export const WelcomeScreen = ()=> {
             </div>
             <div className="row">
                 <div className="feature">
-                    <h3>Live preview with Scroll Sync</h3>
-                    <p>StackEdit’s Scroll Sync feature accurately binds the scrollbars of the editor panel and the
-                        preview panel to ensure that you always keep an eye on the output while writing.</p>
+                    <h3><Trans>live-preview</Trans></h3>
+                    <p><Trans>live-preview-explanation</Trans></p>
                 </div>
                 <img className="image" width="485" src={scrollSynced} alt="Synced scrolling of the app"/>
             </div>
-            <h1>Designed for web writers</h1>
+            <h1><Trans>designed-web-writers</Trans></h1>
             <div className="row">
                 <div className="column">
                     <div className="feature">
-                        <h3>Stay connected</h3>
-                        <p>StackEdit can sync your files with Google Drive, Dropbox and GitHub. It can also publish them
-                            as blog posts to Blogger, WordPress and Zendesk. You can choose whether to upload in
-                            Markdown format, HTML, or to format the output using the Handlebars template engine.</p>
+                        <h3><Trans>stay-connected</Trans></h3>
+                        <p><Trans>stay-connected-explanation</Trans></p>
                     </div>
                 </div>
                 <div className="column">
@@ -120,30 +116,26 @@ export const WelcomeScreen = ()=> {
             <div className="row">
                 <div className="column">
                     <div className="feature">
-                        <h3>Collaborate</h3>
-                        <p>With StackEdit, you can share collaborative workspaces, thanks to the synchronization
-                            mechanism. If two collaborators are working on the same file at the same time, StackEdit
-                            takes care of merging the changes.</p>
+                        <h3><Trans>collaborate</Trans></h3>
+                        <p><Trans>collaborate-explanation</Trans></p>
                     </div>
                     <img className="image" width="300" src={workspace} alt={"workspace"}/>
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>Comment</h3>
-                        <p>StackEdit allows you to insert inline comments and embed collaborator discussions in your
-                            files, just as well as Microsoft Word and Google Docs.</p>
+                        <h3><Trans>comment</Trans></h3>
+                        <p><Trans>comment-explanation</Trans></p>
                     </div>
                     <img className="image" width="395" src={discussion} alt="discussion"/>
                 </div>
             </div>
             <div className="row">
                 <div className="feature">
-                    <h3>Write offline!</h3>
-                    <p>Even when you travel, StackEdit is still accessible and lets you write offline just like any
-                        desktop application. You have no excuse!</p>
+                    <h3><Trans>write-offline</Trans></h3>
+                    <p><Trans>write-offline-explanation</Trans></p>
                 </div>
             </div>
-            <h1>Extended Markdown support</h1>
+            <h1><Trans>markdown-support</Trans></h1>
             <div className="row">
                 <div className="column">
                     <br/>
@@ -153,9 +145,8 @@ export const WelcomeScreen = ()=> {
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>GitHub Flavored Markdown</h3>
-                        <p>StackEdit supports different Markdown flavors such as Markdown Extra, GFM and CommonMark.
-                            Each Markdown feature can be enabled or disabled at your convenience.</p>
+                        <h3><Trans>github-flavored</Trans></h3>
+                        <p><Trans>github-flavored-explanation</Trans></p>
                     </div>
                 </div>
             </div>
@@ -168,9 +159,8 @@ export const WelcomeScreen = ()=> {
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>LaTeX mathematical expressions</h3>
-                        <p>StackEdit renders mathematics from LaTeX expressions inside your markdown file, as you would
-                            do on Stack Exchange.</p>
+                        <h3><Trans>latex-mathematical-expressions</Trans></h3>
+                        <p><Trans>latex-mathematical-expressions-explanation</Trans></p>
                     </div>
                 </div>
             </div>
@@ -182,8 +172,8 @@ export const WelcomeScreen = ()=> {
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>UML diagrams</h3>
-                        <p>StackEdit enables you to write sequence diagrams and flow charts using a simple syntax.</p>
+                        <h3><Trans>uml-diagrams</Trans></h3>
+                        <p><Trans>uml-diagrams-explanation</Trans></p>
                     </div>
                 </div>
             </div>
@@ -195,8 +185,8 @@ export const WelcomeScreen = ()=> {
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>Scores</h3>
-                        <p>StackEdit can render musical scores using the ABC notation.</p>
+                        <h3><Trans>scores</Trans></h3>
+                        <p><Trans>scores-explanation</Trans></p>
                     </div>
                 </div>
             </div>
@@ -208,8 +198,8 @@ export const WelcomeScreen = ()=> {
                 </div>
                 <div className="column">
                     <div className="feature">
-                        <h3>Emojis</h3>
-                        <p>StackEdit supports inserting emojis in your file using the Markdown emoji markup.</p>
+                        <h3><Trans>emojis</Trans></h3>
+                        <p><Trans>emojis-explanation</Trans></p>
                     </div>
                 </div>
             </div>
@@ -228,7 +218,7 @@ export const WelcomeScreen = ()=> {
                 event.preventDefault();
 
                 navigate('/privacy')
-            }} target="_blank">Privacy Policy</a>
+            }} target="_blank"><Trans>privacy-policy</Trans></a>
         </div>
     </div>
 }
