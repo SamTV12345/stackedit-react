@@ -1,13 +1,14 @@
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {store} from "../store/store";
+import i18n from "../i18n/i18n";
 
 export const openFileCreatedEvent = (filename:string)=>{
 
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.SUCESS,
-        title: "New file created",
-        message: `A new file with the name ${filename} was created`
+        title: i18n.t('alert-new-created'),
+        message: i18n.t('alert-new-file-created-explanation', {filename})
     }))
 }
 
@@ -16,8 +17,8 @@ export const openGitHubAccountAdded = (githubAccount:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.SUCESS,
-        title: "GitHub Account added",
-        message: `Your GitHub Account ${githubAccount} was successfully added/updated.`
+        title: i18n.t('alert-github-account-added'),
+        message: i18n.t('alert-github-account-added-explanation', {username: githubAccount})
     }))
 }
 
@@ -25,8 +26,8 @@ export const openGitHubAccountNotAdded = (githubAccount: string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "GitHub Account not added/updated",
-        message: `Your GitHub Account ${githubAccount} could not be added/updated. Please try again later.`
+        title: i18n.t('alert-github-account-added-error'),
+        message: i18n.t('alert-github-account-added-error-explanation', {username: githubAccount})
     }))
 }
 
@@ -36,8 +37,8 @@ export const uploadToGitHubSuccessful = (filename:string, githubAccount: string,
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "GitHub Account not added/deleted",
-        message: `Your file ${filename} was successfully uploaded to ${githubAccount+'/'+reponame}`
+        title: i18n.t('alert-github-upload-error'),
+        message: i18n.t('alert-github-upload-error-explanation', {filename, username: githubAccount, reponame})
     }))
 }
 
@@ -46,8 +47,8 @@ export const updatedFilename = (id:string, filename:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.SUCESS,
-        title: "Filename updated",
-        message: `Your file with id ${id} was renamed to ${filename}`
+        title: i18n.t('alert-github-filename-updated'),
+        message: i18n.t('alert-github-filename-updated-explanation', {filename, id})
     }))
 }
 
@@ -55,8 +56,8 @@ export const updatedFile = (filename:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.SUCESS,
-        title: "File saved",
-        message: `Your file ${filename} was successfully saved to the database`
+        title: i18n.t('alert-updated-file'),
+        message: i18n.t('alert-updated-file-explanation', {filename})
     }))
 }
 
@@ -65,8 +66,8 @@ export const updatedFileErrored = (filename:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "File not saved",
-        message: `Your file ${filename} could not be saved to the database.`
+        title: i18n.t('alert-not-updated-file'),
+        message: i18n.t('alert-not-updated-file-explanation', {filename})
     }))
 }
 
@@ -75,8 +76,8 @@ export const displayFileNotFound = (id:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "File not found",
-        message: `Your file with id ${id} could not be found in database`
+        title: i18n.t('alert-file-not-found'),
+        message: i18n.t('alert-file-not-found-explanation', {id})
     }))
 }
 
@@ -84,8 +85,8 @@ export const uploadToGitHubRepoNotFound = (githubAccount: string, reponame:strin
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "GitHub repo not found.",
-        message: `The repository ${githubAccount+'/'+reponame} could not be found.`
+        title: i18n.t('alert-github-repo-not-found'),
+        message: i18n.t('alert-github-repo-not-found-explanation', {githubAccount, reponame})
     }))
 }
 
@@ -95,7 +96,7 @@ export const openErrorOpeningFile = (filename:string)=>{
     store.dispatch(alertActions.setAlerting({
         open: true,
         type: AlertTypes.ERROR,
-        title: "Error when opening file",
-        message: `The file ${filename} could not be opened`
+        title: i18n.t('alert-open-file-error'),
+        message: i18n.t('alert-open-file-error-explanation', {filename})
     }))
 }
