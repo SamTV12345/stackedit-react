@@ -15,10 +15,12 @@ import tweemoji from '../css/twemoji.png'
 
 import "../css/landing.css"
 import React, {useRef} from "react";
+import {useTranslation} from "react-i18next";
 
 export const WelcomeScreen = ()=> {
     const navigate = useNavigate()
     const scrollTo = useRef<HTMLDivElement>(null)
+    const {t} = useTranslation()
 
     return <div className="landing" id="landing">
         <div className="navigation-bar">
@@ -27,14 +29,13 @@ export const WelcomeScreen = ()=> {
                     <path
                         d="M 16.8363,2.73375C 16.45,2.73375 16.0688,2.88125 15.7712,3.17375L 13.6525,5.2925L 18.955,10.5962L 21.0737,8.47625C 21.665,7.89 21.665,6.94375 21.0737,6.3575L 17.895,3.17375C 17.6025,2.88125 17.2163,2.73375 16.8363,2.73375 Z M 12.9437,6.00125L 4.84375,14.1062L 7.4025,14.39L 7.57875,16.675L 9.85875,16.85L 10.1462,19.4088L 18.2475,11.3038M 4.2475,15.0437L 2.515,21.7337L 9.19875,19.9412L 8.955,17.7838L 6.645,17.6075L 6.465,15.2925"></path>
                 </svg>
-                Start writing
+                {t('start-writing')}
             </a>
         </div>
         <div className="splash-screen">
             <div className="splash-screen__logo">
                 <div className="splash-screen__subtitle">
-                    In-browser Markdown editor
-
+                    {t('markdown-editor')}
                     <div className="social">
                         <a href="https://github.com/SamTV12345/stackedit-react" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
@@ -55,19 +56,18 @@ export const WelcomeScreen = ()=> {
                             d="M 11,4L 13,4L 13,16.0104L 18.5052,10.5052L 19.9194,11.9194L 12,19.8388L 4.08058,11.9194L 5.49479,10.5052L 11,16.0104L 11,4 Z ">
                         </path>
                     </svg>
-                    Read more
+                    {t('read-more')}
                 </a>
             </div>
         </div>
         <div className="anchor" ref={scrollTo}></div>
         <div className="landing__content">
-            <h1>Unrivalled writing experience</h1>
+            <h1>{t('unrivalled-writing')}</h1>
             <div className="row">
                 <div className="column">
                     <div className="feature">
-                        <h3>Rich Markdown editor</h3>
-                        <p>StackEdit’s Markdown syntax highlighting is unique. The refined text formatting of the editor
-                            helps you visualize the final rendering of your files.</p>
+                        <h3>{t('rich-markdown-editor')}</h3>
+                        <p>{t('stackedit-syntax')}</p>
                     </div>
                 </div>
                 <div className="column">
@@ -79,15 +79,14 @@ export const WelcomeScreen = ()=> {
             <div className="row">
                 <img className="image" width="410" src={navigationBar} alt="Navigation bar of the app"/>
                 <div className="feature">
-                    <h3>WYSIWYG controls</h3>
-                    <p>StackEdit provides very handy formatting buttons and shortcuts, thanks to PageDown, the
-                        WYSIWYG-style Markdown editor used by Stack Overflow.</p>
+                    <h3>{t('wysiwyg-controls')}</h3>
+                    <p>{t('wysiwyg-explanation')}</p>
                 </div>
             </div>
             <div className="row">
                 <div className="column">
                     <div className="feature">
-                        <h3>Smart layout</h3>
+                        <h3>{t('smart-layout')}</h3>
                         <p>Whether you write, you review, you comment… StackEdit's layout provides you with the
                             flexibility you need, without sacrifice.</p>
                     </div>

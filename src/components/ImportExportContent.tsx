@@ -7,13 +7,14 @@ import {isFile} from "../utils/TypeChecker";
 import {OkButton} from "./OkButton";
 import {DangerButton} from "./DangerButton";
 import {AlternativeButton} from "./AlternativeButton";
+import {useTranslation} from "react-i18next";
 
 export const ImportExportContent = () => {
     const dispatch = useAppDispatch()
     const [files, setFiles] = useState<FileItem[]>([])
     const [dragState, setDragState] = useState<DragState>("none")
     const fileInputRef = useRef<HTMLInputElement>(null)
-
+    const {t} = useTranslation()
 
     type FileItem = {
         name: string,
@@ -134,7 +135,7 @@ export const ImportExportContent = () => {
              onDragLeave={() => setDragState("none")}
              onDragOver={handleDragOver} onDrop={handleDrop}
              onClick={handleClick}>
-            Drag file here.
+            {t('drag-here')}
         </div>
         <div className="flex flex-col gap-4">
             {files.filter(f=> isFile(f.json)).map((f, i) => {
@@ -144,9 +145,9 @@ export const ImportExportContent = () => {
                         <AlternativeButton onClick={()=>{
                             f.json.id = crypto.randomUUID()
                             addFileToDatabase(f.json)
-                        }} hide={f.exists}>Save as copy</AlternativeButton>
+                        }} hide={f.exists}>{t('save-as-copy')}</AlternativeButton>
                         <DangerButton hide={f.exists}
-                                onClick={()=>importAndOverrideFile(f.json)}>Override</DangerButton>
+                                onClick={()=>importAndOverrideFile(f.json)}>{t('override')}</DangerButton>
                     </div>
             })}
         </div>
@@ -155,6 +156,6 @@ export const ImportExportContent = () => {
             dispatch(commonActions.setSettingsMenuOpen(false))
             setTimeout(()=>window.print(),200)
         }
-        }>Export to PDF (Text selection only in Chrome)</button>
+        }>{t('export-to-pdf')}</button>
     </div>
 }

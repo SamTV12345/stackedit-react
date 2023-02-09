@@ -1,6 +1,6 @@
 import {db} from "../database/Database";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
-import {useEffect} from "react";
+import {useEffect, useTransition} from "react";
 import {commonActions} from "../slices/CommonSlice";
 import {createPortal} from "react-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -10,13 +10,16 @@ import {FileToggle} from "./FileToggle";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {openErrorOpeningFile, openFileCreatedEvent} from "../utils/AlertEvents";
 import {isFile} from "../utils/TypeChecker";
+import {useTranslation} from "react-i18next";
 
 export const FileViewer = () => {
     const files = useAppSelector(state => state.commonReducer.files)
     const fileViewerOpen = useAppSelector(state => state.commonReducer.fileMenuOpen)
     const dispatch = useAppDispatch()
     const currentFile = useAppSelector(state => state.commonReducer.currentFile)
+    const {t} = useTranslation(
 
+    )
     useEffect(() => {
         if (files.length == 0) {
             db.getAll("file")
@@ -41,7 +44,7 @@ export const FileViewer = () => {
                          onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-start p-4 rounded-t border-b border-gray-600">
                             <h3 className="text-xl font-semibold text-white">
-                                Dateimanager {<FontAwesomeIcon icon={faPlus} onClick={() =>
+                                {t('filemanager')} {<FontAwesomeIcon icon={faPlus} onClick={() =>
                                 db.count("file").then(c => {
                                     saveFile("# New file", `file${c}`)
                                     openFileCreatedEvent(`file${c}`)
@@ -57,15 +60,15 @@ export const FileViewer = () => {
                                           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                           clipRule="evenodd"></path>
                                 </svg>
-                                <span className="sr-only">testbutton</span>
+                                <span className="sr-only">{t('close')}</span>
                             </button>
                         </div>
                         <div className="p-6 space-y-6 text-base leading-relaxed text-gray-400 justify-center flex">
                             <div className="grid grid-cols-4">
-                                <div>Dateiname</div>
-                                <div>Inhalt</div>
-                                <div>Zuletzt geöffnet</div>
-                                <div>Aktionen</div>
+                                <div>{t('filename')}</div>
+                                <div>{t('content')}</div>
+                                <div>{t('last-opened')}</div>
+                                <div>{t('actions')}</div>
 
 
                                 {files.map((f) => {

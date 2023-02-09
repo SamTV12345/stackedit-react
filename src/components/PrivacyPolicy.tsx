@@ -1,8 +1,9 @@
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 export const PrivacyPolicy = ()=>{
     const navigate = useNavigate()
-
+    const {t} = useTranslation()
     return <div className="landing" id="landing">
         <div className="navigation-bar">
             <a className="navigation-bar__button button" onClick={()=>navigate("/app")} title="The app">
@@ -10,13 +11,13 @@ export const PrivacyPolicy = ()=>{
                     <path
                         d="M 16.8363,2.73375C 16.45,2.73375 16.0688,2.88125 15.7712,3.17375L 13.6525,5.2925L 18.955,10.5962L 21.0737,8.47625C 21.665,7.89 21.665,6.94375 21.0737,6.3575L 17.895,3.17375C 17.6025,2.88125 17.2163,2.73375 16.8363,2.73375 Z M 12.9437,6.00125L 4.84375,14.1062L 7.4025,14.39L 7.57875,16.675L 9.85875,16.85L 10.1462,19.4088L 18.2475,11.3038M 4.2475,15.0437L 2.515,21.7337L 9.19875,19.9412L 8.955,17.7838L 6.645,17.6075L 6.465,15.2925"></path>
                 </svg>
-                Start writing
+                {t('start-writing')}
             </a>
         </div>
         <div className="splash-screen">
             <div className="splash-screen__logo">
                 <div className="splash-screen__subtitle">
-                    We value your privacy
+                    {t('privacy-value')}
 
                     <div className="social">
                         <a href="https://github.com/benweet/stackedit" target="_blank">
@@ -38,7 +39,7 @@ export const PrivacyPolicy = ()=>{
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                       clipRule="evenodd"></path>
                             </svg>
-                            <span>No data is being collected from <strong>MY</strong> side.</span></li>
+                            <span>{t('privacy-strong')}</span></li>
                         <li className="flex items-center space-x-3">
                             <svg className="flex-shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
                                  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +47,7 @@ export const PrivacyPolicy = ()=>{
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                       clipRule="evenodd"></path>
                             </svg>
-                            <span>No source code is loaded from <strong>OTHER</strong> websites.</span>
+                            <span>{t('source-code-privacy')}</span>
                         </li>
                         <li className="flex items-center space-x-3">
                             <svg className="flex-shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
@@ -55,7 +56,7 @@ export const PrivacyPolicy = ()=>{
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                       clipRule="evenodd"></path>
                             </svg>
-                            <span>Everything is processed on <strong>YOUR</strong> device.</span>
+                            <span>{'device-privacy'}</span>
                         </li>
                     </ul>
                 </div>
