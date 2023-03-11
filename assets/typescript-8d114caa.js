@@ -1,4 +1,4 @@
-import{m as a}from"./editor.main-8828ba60.js";import"./index-afb4ae98.js";/*!-----------------------------------------------------------------------------
+import{m as a}from"./toggleHighContrast-c63db776.js";import"./index-d04cf408.js";/*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Version: 0.36.1(6c56744c3419458f0dd48864520b759d1a3a1ca8)
  * Released under the MIT license
