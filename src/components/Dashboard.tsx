@@ -40,6 +40,7 @@ export const Dashboard = ()=>{
                             <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.ZENDESK)}`} onClick={()=>setSelectedItem(UploadType.ZENDESK)}>{t('zendesk')}</div>
                             <div className={`m-2 p-2 rounded ${highlightIfSelected((UploadType.GDRIVE))}`} onClick={()=>setSelectedItem(UploadType.GDRIVE)}>{t('google-drive')}</div>
                             <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.DROPBOX)}`} onClick={()=>setSelectedItem(UploadType.DROPBOX)}>{t('dropbox')}</div>
+                                <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.Settings)}`}>Einstellungen</div>
                             </div>
                         </div>
                         <DashboardContent selectedItem={selectedItem}/>
