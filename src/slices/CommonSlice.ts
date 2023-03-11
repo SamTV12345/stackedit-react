@@ -13,7 +13,8 @@ interface CommonSliceProp {
     settingsMenuOpen: boolean
     files: File[],
     fileMenuOpen: boolean,
-    currentFile:File|undefined
+    currentFile:File|undefined,
+    scrollSync: boolean
 }
 
 const initialState:CommonSliceProp = {
@@ -21,7 +22,8 @@ const initialState:CommonSliceProp = {
     settingsMenuOpen:false,
     files: [],
     fileMenuOpen: false,
-    currentFile: undefined
+    currentFile: undefined,
+    scrollSync: localStorage.getItem('scrollSync')==='true'
 }
 
 export const commonSlice = createSlice({
@@ -57,6 +59,11 @@ export const commonSlice = createSlice({
             if(state.currentFile!==undefined) {
                 state.currentFile.repo = action.payload
             }
+        },
+        setScrollSync: (state, action:PayloadAction<boolean>)=>{
+            state.scrollSync = action.payload
+            localStorage.setItem('scrollSync', action.payload.toString())
+            console.log('scrollSync', action.payload)
         }
     }
 })
