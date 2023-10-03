@@ -36,7 +36,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
-    "remark-mermaidjs": "^4.1.1"
+    "remark-mermaidjs": "^6.0.0"
   },
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1",
