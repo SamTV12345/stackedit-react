@@ -6,9 +6,8 @@ import remarkMath from "remark-math";
 import 'katex/dist/katex.min.css'
 import rehypeKatex from "rehype-katex";
 import {useAppSelector} from "../store/hooks";
-// @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import remarkMermaid from 'remark-mermaidjs';
+import remarkMermaid from 'rehype-mermaid';
 import "../css/markdown.css"
 import { remark } from 'remark';
 import {Spinner} from "./Spinner";
@@ -36,14 +35,13 @@ export const MarkdownViewer:FC<MarkdownViewerProps> = ({refObj})=>{
         <ReactMarkdown sourcePos className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer"
                        children={currentFile}
                        components={{
-                            code({node, inline, className, children, ...props}) {
+                            code({node,inlist, className, children, ...props}) {
                                const match = /language-(\w+)/.exec(className || '')
-                               return !inline && match ? (
+                               return !inlist && match ? (
                                    <SyntaxHighlighter
                                        children={String(children).replace(/\n$/, '') as string}
                                        language={match[1]}
                                        PreTag="div"
-                                       {...props}
                                    />
                                ) : (
                                    <code className={className} {...props}>
