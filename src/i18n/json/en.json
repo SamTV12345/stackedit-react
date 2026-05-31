@@ -39,6 +39,8 @@
   "comment": "Comment",
   "comment-explanation": "StackEdit allows you to insert inline comments and embed collaborator discussions in your files, just as well as Microsoft Word and Google Docs.",
   "content": "Content",
+  "copy": "Copy",
+  "copied": "Copied!",
   "delete": "Delete",
   "designed-web-writers": "Designed for web writers",
   "device-privacy": "Everything is processed on device.",
