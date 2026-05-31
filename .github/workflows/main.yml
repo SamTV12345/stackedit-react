@@ -9,7 +9,8 @@ on:
 permissions:
   contents: write
 jobs:
-  test:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -44,26 +45,9 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192
         run: npm run build
 
-      - name: Upload build artifact
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist
-
-  deploy:
-    needs: test
-    if: github.event_name == 'push'
-    concurrency: ci-${{ github.ref }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-
+      # Deploy to GitHub Pages only on pushes to main (not on PRs).
       - name: Deploy 🚀
+        if: github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
