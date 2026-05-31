@@ -126,7 +126,7 @@ export const ImportExportContent = () => {
                 setFiles(filesToSet)
             })
         })
-        dispatch(alertActions.setAlerting({open: true,type:AlertTypes.SUCESS,message:`${json.name} imported successfully`,title:"Import success"}))
+        dispatch(alertActions.setAlerting({open: true,type:AlertTypes.SUCCESS,message:`${json.name} imported successfully`,title:"Import success"}))
     }
 
     return <div className="flex flex-col justify-center items-center h-full gap-4">

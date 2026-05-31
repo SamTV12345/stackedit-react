@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export enum AlertTypes {
-    ERROR, SUCESS, WARN
+    ERROR, SUCCESS, WARN
 }
 
-interface AlertProps {
+export interface AlertProps {
     open:boolean,
     message: string,
     title:string,
@@ -15,7 +15,7 @@ const initialState:AlertProps = {
     open:false,
     message:'',
     title: '',
-    type: AlertTypes.SUCESS
+    type: AlertTypes.SUCCESS
 }
 
 export const alertSlice = createSlice({

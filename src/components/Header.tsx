@@ -13,10 +13,13 @@ import {uploadFileToRegistry} from "../utils/GithubUtils";
 import {RepoNameInputField} from "./RepoNameInputField";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {Dropdown} from "./Dropdown";
+import {downloadFileAsJson} from "../utils/download";
+import {useTranslation} from "react-i18next";
 
 
 export const Header = ()=>{
     const dispatch = useAppDispatch()
+    const {t} = useTranslation()
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile)
     const [accounts, setAccounts] = useState<AccountState>({})
     const [animateButton, setAnimateButton] = useState<boolean>(false)
@@ -40,29 +43,7 @@ export const Header = ()=>{
     }
 
     const downloadCurrentFile = ()=>{
-        // Create blob link to download
-        const url = window.URL.createObjectURL(
-            new Blob([JSON.stringify(currentFile)], {
-                type:'application/json'
-            }),
-        );
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute(
-            'download',
-            `FileName.json`,
-        );
-
-        // Append to html link element page
-        document.body.appendChild(link);
-
-        // Start download
-        link.click();
-
-        if(link.parentNode){
-            // Clean up and remove the link
-            link.parentNode.removeChild(link);
-        }
+        downloadFileAsJson(currentFile)
     }
 
     return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full print:hidden gap-4">
@@ -72,9 +53,9 @@ export const Header = ()=>{
                 .then(()=>{
                     dispatch(alertActions.setAlerting({
                         open: true,
-                        type: AlertTypes.SUCESS,
-                        title: "Content copied to clipboard",
-                        message: `Your content is now copied to your clipboard.`
+                        type: AlertTypes.SUCCESS,
+                        title: t('clipboard-copied'),
+                        message: t('clipboard-copied-explanation')
                     }))
                 })
             dispatch(alertActions.setOpen(true))

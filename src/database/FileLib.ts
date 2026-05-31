@@ -99,7 +99,7 @@ export const importAndOverrideFile = (file: File)=>{
                 store.dispatch(commonActions.setText(file.content))
                 store.dispatch(commonActions.setCurrentFile(file))
             }
-            store.dispatch(alertActions.setAlerting({open: true,type: AlertTypes.SUCESS,message: "File imported successfully",title:"Imported succesfully"}))
+            store.dispatch(alertActions.setAlerting({open: true,type: AlertTypes.SUCCESS,message: "File imported successfully",title:"Imported succesfully"}))
             store.dispatch(alertActions.setOpen(true))
         })
 }
