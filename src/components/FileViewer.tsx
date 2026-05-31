@@ -40,7 +40,7 @@ export const FileViewer = () => {
                                               className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full z-40"
                                               onClick={() => dispatch(commonActions.setFileMenuOpen(false))}>
                 <div className="grid place-items-center h-screen">
-                    <div className="relative rounded-lg shadow bg-gray-700 justify-center w-full md:w-3/4"
+                    <div className="relative rounded-lg shadow-sm bg-gray-700 justify-center w-full md:w-3/4"
                          onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-start p-4 rounded-t border-b border-gray-600">
                             <h3 className="text-xl font-semibold text-white">

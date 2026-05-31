@@ -13,7 +13,7 @@ import {Mermaid} from "./Mermaid";
 import {getCodeLanguage} from "../utils/codeLanguage";
 
 interface MarkdownViewerProps {
-    refObj: RefObject<HTMLDivElement>
+    refObj: RefObject<HTMLDivElement | null>
 }
 
 // react-syntax-highlighter (PrismAsync) loads each language grammar on demand,
@@ -50,13 +50,15 @@ const MarkdownViewerImpl: FC<MarkdownViewerProps> = ({refObj}) => {
 
     return (
         <div className="overflow-y-scroll" ref={refObj}>
-            <ReactMarkdown
-                className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer"
-                children={currentFile}
-                components={components}
-                remarkPlugins={remarkPlugins}
-                rehypePlugins={rehypePlugins}
-            />
+            {/* react-markdown v10 dropped the className prop; style a wrapper instead. */}
+            <div className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer">
+                <ReactMarkdown
+                    children={currentFile}
+                    components={components}
+                    remarkPlugins={remarkPlugins}
+                    rehypePlugins={rehypePlugins}
+                />
+            </div>
         </div>)
 }
 

@@ -33,7 +33,7 @@ export const PrivacyPolicy = ()=>{
                 <div className="flex justify-center text-2xl">
                     <ul className="mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400">
                         <li className="flex items-center space-x-3">
-                            <svg className="flex-shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
+                            <svg className="shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
                                  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd"
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -41,7 +41,7 @@ export const PrivacyPolicy = ()=>{
                             </svg>
                             <span>{t('privacy-strong')}</span></li>
                         <li className="flex items-center space-x-3">
-                            <svg className="flex-shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
+                            <svg className="shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
                                  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd"
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -50,7 +50,7 @@ export const PrivacyPolicy = ()=>{
                             <span>{t('source-code-privacy')}</span>
                         </li>
                         <li className="flex items-center space-x-3">
-                            <svg className="flex-shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
+                            <svg className="shrink-0 w-8 h-8 text-green-500 dark:text-green-400"
                                  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd"
                                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

@@ -152,7 +152,7 @@ export const ImportExportContent = () => {
             })}
         </div>
         <input type={"file"} ref={fileInputRef} hidden onChange={handleInputChanged} accept="application/json" multiple />
-        <button className="bg-slate-600 p-4 rounded w-full" onClick={()=>{
+        <button className="bg-slate-600 p-4 rounded-sm w-full" onClick={()=>{
             dispatch(commonActions.setSettingsMenuOpen(false))
             setTimeout(()=>window.print(),200)
         }

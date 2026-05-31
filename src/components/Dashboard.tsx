@@ -19,7 +19,7 @@ export const Dashboard = ()=>{
     return <div id="defaultModal" tabIndex={-1} aria-hidden="true"
                 className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 md:inset-0 h-modal md:h-full z-40" onClick={()=>dispatch(commonActions.setSettingsMenuOpen(false))}>
         <div className="grid place-items-center h-screen">
-            <div className="relative rounded-lg shadow bg-gray-700 justify-center w-full md:w-3/4" onClick={(e)=>e.stopPropagation()}>
+            <div className="relative rounded-lg shadow-sm bg-gray-700 justify-center w-full md:w-3/4" onClick={(e)=>e.stopPropagation()}>
                 <div className="flex justify-between items-start p-4 rounded-t border-b border-gray-600">
                     <h3 className="text-xl font-semibold text-white">
                         <Trans>settings</Trans>
@@ -33,14 +33,14 @@ export const Dashboard = ()=>{
                     <div className="grid grid-cols-[auto_1fr]">
                         <div className="w-60 content-center grid place-items-center text-xl">
                             <div className={"w-40 m-2 "}>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.GITHUB)}`} onClick={()=>setSelectedItem(UploadType.GITHUB)}>{t('github')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.GITLAB)}`} onClick={()=>setSelectedItem(UploadType.GITLAB)}>{t('gitlab')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.WORDPRESS)}`} onClick={()=>setSelectedItem(UploadType.WORDPRESS)}>{t('wordpress')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.IE)}`} onClick={()=>setSelectedItem(UploadType.IE)}>{t('import-export')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.ZENDESK)}`} onClick={()=>setSelectedItem(UploadType.ZENDESK)}>{t('zendesk')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected((UploadType.GDRIVE))}`} onClick={()=>setSelectedItem(UploadType.GDRIVE)}>{t('google-drive')}</div>
-                            <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.DROPBOX)}`} onClick={()=>setSelectedItem(UploadType.DROPBOX)}>{t('dropbox')}</div>
-                                <div className={`m-2 p-2 rounded ${highlightIfSelected(UploadType.Settings)}`} onClick={()=>setSelectedItem(UploadType.Settings)}>{t('settings')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.GITHUB)}`} onClick={()=>setSelectedItem(UploadType.GITHUB)}>{t('github')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.GITLAB)}`} onClick={()=>setSelectedItem(UploadType.GITLAB)}>{t('gitlab')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.WORDPRESS)}`} onClick={()=>setSelectedItem(UploadType.WORDPRESS)}>{t('wordpress')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.IE)}`} onClick={()=>setSelectedItem(UploadType.IE)}>{t('import-export')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.ZENDESK)}`} onClick={()=>setSelectedItem(UploadType.ZENDESK)}>{t('zendesk')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected((UploadType.GDRIVE))}`} onClick={()=>setSelectedItem(UploadType.GDRIVE)}>{t('google-drive')}</div>
+                            <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.DROPBOX)}`} onClick={()=>setSelectedItem(UploadType.DROPBOX)}>{t('dropbox')}</div>
+                                <div className={`m-2 p-2 rounded-sm ${highlightIfSelected(UploadType.Settings)}`} onClick={()=>setSelectedItem(UploadType.Settings)}>{t('settings')}</div>
                             </div>
                         </div>
                         <DashboardContent selectedItem={selectedItem}/>
