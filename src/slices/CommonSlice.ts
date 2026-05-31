@@ -21,6 +21,7 @@ interface CommonSliceProp {
     savedContent: string,
     saveStatus: SaveStatus,
     outlineOpen: boolean,
+    commandPaletteOpen: boolean,
 }
 
 const initialState:CommonSliceProp = {
@@ -33,6 +34,7 @@ const initialState:CommonSliceProp = {
     savedContent: '',
     saveStatus: 'saved',
     outlineOpen: false,
+    commandPaletteOpen: false,
 }
 
 export const commonSlice = createSlice({
@@ -81,6 +83,9 @@ export const commonSlice = createSlice({
         },
         setOutlineOpen: (state, action:PayloadAction<boolean>)=>{
             state.outlineOpen = action.payload
+        },
+        setCommandPaletteOpen: (state, action:PayloadAction<boolean>)=>{
+            state.commandPaletteOpen = action.payload
         },
         setRepoName: (state, action) => {
             if(state.currentFile!==undefined) {

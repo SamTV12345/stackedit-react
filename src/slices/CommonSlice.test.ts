@@ -56,3 +56,14 @@ describe('CommonSlice outline panel', () => {
         expect(state.outlineOpen).toBe(false)
     })
 })
+
+describe('CommonSlice command palette', () => {
+    it('is closed initially and can be opened/closed', () => {
+        let state = initial()
+        expect(state.commandPaletteOpen).toBe(false)
+        state = commonReducer(state, commonActions.setCommandPaletteOpen(true))
+        expect(state.commandPaletteOpen).toBe(true)
+        state = commonReducer(state, commonActions.setCommandPaletteOpen(false))
+        expect(state.commandPaletteOpen).toBe(false)
+    })
+})
