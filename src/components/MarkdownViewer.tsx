@@ -6,10 +6,10 @@ import remarkMath from "remark-math";
 import 'katex/dist/katex.min.css'
 import rehypeKatex from "rehype-katex";
 import {useAppSelector} from "../store/hooks";
-import {PrismAsync as SyntaxHighlighter} from 'react-syntax-highlighter'
 import "../css/markdown.css"
 import {Spinner} from "./Spinner";
 import {Mermaid} from "./Mermaid";
+import {CodeBlock} from "./CodeBlock";
 import {getCodeLanguage} from "../utils/codeLanguage";
 
 interface MarkdownViewerProps {
@@ -28,7 +28,7 @@ const markdownComponents = {
             return <Mermaid chart={value}/>
         }
         if (language) {
-            return <SyntaxHighlighter language={language} PreTag="div">{value}</SyntaxHighlighter>
+            return <CodeBlock language={language} value={value}/>
         }
         return <code className={className} {...props}>{children}</code>
     }
