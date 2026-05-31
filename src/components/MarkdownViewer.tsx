@@ -13,7 +13,7 @@ import {Mermaid} from "./Mermaid";
 import {getCodeLanguage} from "../utils/codeLanguage";
 
 interface MarkdownViewerProps {
-    refObj: RefObject<HTMLDivElement>
+    refObj: RefObject<HTMLDivElement | null>
 }
 
 // react-syntax-highlighter (PrismAsync) loads each language grammar on demand,
