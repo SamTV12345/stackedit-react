@@ -1,7 +1,164 @@
-blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin: 1.5em 10px;
-    padding: 1em 10px .1em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
+/*
+ * Typographic styles for the rendered markdown preview. Everything is scoped to
+ * .markdown-viewer so it doesn't affect the rest of the app (landing page, etc.).
+ */
+.markdown-viewer {
+    color: #24292f;
+    font-size: 16px;
+    line-height: 1.7;
+    word-wrap: break-word;
+}
+
+/* ----- Headings ----- */
+.markdown-viewer h1,
+.markdown-viewer h2,
+.markdown-viewer h3,
+.markdown-viewer h4,
+.markdown-viewer h5,
+.markdown-viewer h6 {
+    margin: 1.5em 0 0.6em;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.markdown-viewer h1:first-child,
+.markdown-viewer h2:first-child,
+.markdown-viewer h3:first-child {
+    margin-top: 0;
+}
+
+.markdown-viewer h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.markdown-viewer h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.markdown-viewer h3 { font-size: 1.25em; }
+.markdown-viewer h4 { font-size: 1em; }
+.markdown-viewer h5 { font-size: 0.875em; }
+.markdown-viewer h6 { font-size: 0.85em; color: #6b7280; }
+
+/* ----- Block elements ----- */
+.markdown-viewer p,
+.markdown-viewer ul,
+.markdown-viewer ol,
+.markdown-viewer dl,
+.markdown-viewer table {
+    margin: 0 0 1em;
+}
+
+.markdown-viewer ul,
+.markdown-viewer ol {
+    padding-left: 2em;
+}
+
+.markdown-viewer li + li {
+    margin-top: 0.25em;
+}
+
+.markdown-viewer li > ul,
+.markdown-viewer li > ol {
+    margin: 0.25em 0 0;
+}
+
+.markdown-viewer ul { list-style: disc; }
+.markdown-viewer ul ul { list-style: circle; }
+.markdown-viewer ol { list-style: decimal; }
+
+/* GFM task lists */
+.markdown-viewer li.task-list-item,
+.markdown-viewer li:has(> input[type="checkbox"]) {
+    list-style: none;
+    margin-left: -1.5em;
+}
+
+.markdown-viewer input[type="checkbox"] {
+    margin-right: 0.5em;
+}
+
+/* ----- Links ----- */
+.markdown-viewer a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.markdown-viewer a:hover {
+    text-decoration: underline;
+}
+
+/* ----- Blockquotes ----- */
+.markdown-viewer blockquote {
+    margin: 0 0 1em;
+    padding: 0.25em 1em;
+    color: #57606a;
+    background: #f6f8fa;
+    border-left: 0.25em solid #d0d7de;
+    quotes: none;
+}
+
+.markdown-viewer blockquote > :last-child {
+    margin-bottom: 0;
+}
+
+/* ----- Inline code (block code is handled by the syntax highlighter) ----- */
+.markdown-viewer code:not([class*="language-"]) {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 0.875em;
+    background: rgba(175, 184, 193, 0.2);
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ----- Tables ----- */
+.markdown-viewer table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+}
+
+.markdown-viewer th,
+.markdown-viewer td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
+}
+
+.markdown-viewer th {
+    font-weight: 600;
+    background: #f6f8fa;
+}
+
+.markdown-viewer tr:nth-child(2n) td {
+    background: #f6f8fa;
+}
+
+/* ----- Misc ----- */
+.markdown-viewer img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+.markdown-viewer hr {
+    height: 1px;
+    margin: 1.5em 0;
+    background: #d0d7de;
+    border: 0;
+}
+
+.markdown-viewer kbd {
+    padding: 0.15em 0.4em;
+    font-size: 0.85em;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 #d0d7de;
+    background: #f6f8fa;
 }

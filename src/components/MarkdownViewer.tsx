@@ -7,6 +7,7 @@ import 'katex/dist/katex.min.css'
 import rehypeKatex from "rehype-katex";
 import {useAppSelector} from "../store/hooks";
 import {PrismAsync as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {oneLight} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import "../css/markdown.css"
 import {Spinner} from "./Spinner";
 import {Mermaid} from "./Mermaid";
@@ -28,7 +29,16 @@ const markdownComponents = {
             return <Mermaid chart={value}/>
         }
         if (language) {
-            return <SyntaxHighlighter language={language} PreTag="div">{value}</SyntaxHighlighter>
+            return (
+                <SyntaxHighlighter
+                    language={language}
+                    style={oneLight}
+                    PreTag="div"
+                    customStyle={{margin: '0.75rem 0', borderRadius: '0.5rem', fontSize: '0.9em'}}
+                >
+                    {value}
+                </SyntaxHighlighter>
+            )
         }
         return <code className={className} {...props}>{children}</code>
     }
