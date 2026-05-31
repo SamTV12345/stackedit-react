@@ -49,9 +49,9 @@ const MarkdownViewerImpl: FC<MarkdownViewerProps> = ({refObj}) => {
     }
 
     return (
-        <div className="overflow-y-scroll" ref={refObj}>
+        <div className="h-full overflow-y-scroll print:h-auto print:overflow-visible" ref={refObj}>
             {/* react-markdown v10 dropped the className prop; style a wrapper instead. */}
-            <div className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer">
+            <div className="min-h-full grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer">
                 <ReactMarkdown
                     children={currentFile}
                     components={components}

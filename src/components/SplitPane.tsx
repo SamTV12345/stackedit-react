@@ -59,6 +59,8 @@ export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right}) => {
             <div className="min-w-0 h-full grow-0 shrink-0 print:w-full" style={{flexBasis: `${ratio * 100}%`}}>
                 {left}
             </div>
+            {/* Wide (12px) hit zone with a visible centred grip so the divider is
+                easy to grab; the handle highlights on hover/drag/focus. */}
             <div
                 role="separator"
                 aria-orientation="vertical"
@@ -69,8 +71,10 @@ export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right}) => {
                 data-testid="split-divider"
                 onMouseDown={(e) => { e.preventDefault(); setDragging(true) }}
                 onKeyDown={onKeyDown}
-                className="w-1.5 shrink-0 cursor-col-resize rounded-full bg-gray-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-hidden print:hidden"
-            />
+                className={`group flex w-3 shrink-0 cursor-col-resize select-none items-center justify-center focus:outline-hidden print:hidden ${dragging ? 'is-dragging' : ''}`}
+            >
+                <div className={`h-12 w-1 rounded-full bg-gray-300 transition-colors group-hover:bg-blue-400 group-focus:bg-blue-400 ${dragging ? 'bg-blue-500' : ''}`}/>
+            </div>
             <div className="min-w-0 h-full flex-1 print:w-full">
                 {right}
             </div>
