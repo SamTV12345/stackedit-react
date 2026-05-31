@@ -52,4 +52,13 @@ describe('Toolbar', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Heading 2' }))
         expect(fake.getValue()).toBe('## Title')
     })
+
+    it('triggers the Monaco find action when Find is clicked', () => {
+        const run = vi.fn()
+        const editor = { focus: vi.fn(), getAction: vi.fn().mockReturnValue({ run }) }
+        renderWithStore(<Toolbar editor={editor as any} />)
+        fireEvent.click(screen.getByRole('button', { name: /Find/ }))
+        expect(editor.getAction).toHaveBeenCalledWith('actions.find')
+        expect(run).toHaveBeenCalled()
+    })
 })
