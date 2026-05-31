@@ -7,6 +7,7 @@ import {commonActions} from "../slices/CommonSlice";
 import {updateFile} from "../database/FileLib";
 import {applyTransform} from "../utils/applyTransform";
 import {insertLink, toggleWrap} from "../utils/markdownFormat";
+import {runEditorAction, FIND_ACTION, REPLACE_ACTION} from "../utils/editorActions";
 import {Command, filterCommands} from "../utils/commands";
 
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor
@@ -51,6 +52,8 @@ export const CommandPalette: FC<CommandPaletteProps> = ({editor}) => {
         {id: 'bold', title: t('format-bold'), run: () => applyTransform(editor, (v, s, e) => toggleWrap(v, s, e, '**'))},
         {id: 'italic', title: t('format-italic'), run: () => applyTransform(editor, (v, s, e) => toggleWrap(v, s, e, '*'))},
         {id: 'link', title: t('format-link'), run: () => applyTransform(editor, (v, s, e) => insertLink(v, s, e))},
+        {id: 'find', title: t('format-find'), run: () => runEditorAction(editor, FIND_ACTION)},
+        {id: 'replace', title: t('format-replace'), run: () => runEditorAction(editor, REPLACE_ACTION)},
     ], [t, dispatch, currentFile, scrollSync, text, editor])
 
     const filtered = filterCommands(commands, query)

@@ -1,11 +1,12 @@
 import {FC} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBold, faItalic, faLink, faListUl, faQuoteLeft, faCode} from "@fortawesome/free-solid-svg-icons";
+import {faBold, faItalic, faLink, faListUl, faQuoteLeft, faCode, faMagnifyingGlass, faRightLeft} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import type {editor} from "monaco-editor";
 import {useTranslation} from "react-i18next";
 import {applyTransform, TextTransform} from "../utils/applyTransform";
 import {insertLink, setHeading, toggleLinePrefix, toggleWrap} from "../utils/markdownFormat";
+import {runEditorAction, FIND_ACTION, REPLACE_ACTION} from "../utils/editorActions";
 
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor
 
@@ -27,6 +28,19 @@ const BUTTONS: ToolbarButton[] = [
     {key: 'link', titleKey: 'format-link', icon: faLink, transform: (v, s, e) => insertLink(v, s, e)},
     {key: 'list', titleKey: 'format-list', icon: faListUl, transform: (v, s, e) => toggleLinePrefix(v, s, e, '- ')},
     {key: 'quote', titleKey: 'format-quote', icon: faQuoteLeft, transform: (v, s, e) => toggleLinePrefix(v, s, e, '> ')},
+]
+
+// Buttons that trigger built-in Monaco editor actions (find / replace widgets).
+interface ActionButton {
+    key: string
+    titleKey: string
+    icon: IconDefinition
+    actionId: string
+}
+
+const ACTION_BUTTONS: ActionButton[] = [
+    {key: 'find', titleKey: 'format-find', icon: faMagnifyingGlass, actionId: FIND_ACTION},
+    {key: 'replace', titleKey: 'format-replace', icon: faRightLeft, actionId: REPLACE_ACTION},
 ]
 
 interface ToolbarProps {
@@ -51,6 +65,20 @@ export const Toolbar: FC<ToolbarProps> = ({editor}) => {
                     className="w-8 h-8 flex items-center justify-center rounded-sm text-sm text-gray-700 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                     {button.icon ? <FontAwesomeIcon icon={button.icon}/> : <span className="font-semibold">{button.label}</span>}
+                </button>
+            ))}
+            <span className="mx-1 h-5 w-px bg-gray-200" aria-hidden="true"/>
+            {ACTION_BUTTONS.map(button => (
+                <button
+                    key={button.key}
+                    type="button"
+                    title={t(button.titleKey)}
+                    aria-label={t(button.titleKey)}
+                    disabled={disabled}
+                    onClick={() => runEditorAction(editor, button.actionId)}
+                    className="w-8 h-8 flex items-center justify-center rounded-sm text-sm text-gray-700 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                    <FontAwesomeIcon icon={button.icon}/>
                 </button>
             ))}
         </div>
