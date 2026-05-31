@@ -6,6 +6,9 @@ import {FC, useEffect, useState} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
 import {Spinner} from "./Spinner";
 import {setupMonaco} from "../utils/setupMonaco";
+import {Toolbar} from "./Toolbar";
+import {applyTransform} from "../utils/applyTransform";
+import {insertLink, toggleWrap} from "../utils/markdownFormat";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
@@ -36,12 +39,28 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
         }
     },[])
 
+    const registerShortcuts = (instance: IStandaloneCodeEditor, monaco: typeof import("monaco-editor")) => {
+        const {CtrlCmd} = monaco.KeyMod
+        const {KeyB, KeyI, KeyK} = monaco.KeyCode
+        instance.addAction({id: 'md-bold', label: 'Bold', keybindings: [CtrlCmd | KeyB],
+            run: () => applyTransform(instance, (v, s, e) => toggleWrap(v, s, e, '**'))})
+        instance.addAction({id: 'md-italic', label: 'Italic', keybindings: [CtrlCmd | KeyI],
+            run: () => applyTransform(instance, (v, s, e) => toggleWrap(v, s, e, '*'))})
+        instance.addAction({id: 'md-link', label: 'Link', keybindings: [CtrlCmd | KeyK],
+            run: () => applyTransform(instance, (v, s, e) => insertLink(v, s, e))})
+    }
+
     if(!monacoReady){
         return <Spinner/>
     }
 
-    return <div>{text!==undefined&& <Editor value={text} language="markdown" options={{wordWrap:'on'}}
-                                            onMount={(editor, monaco) => {setEditor(editor)}}
-                                                               onChange={(e)=>{dispatch(commonActions.setEditorText(e as string))}} theme='light'
-                                                               className="max-h-100 rounded-2xl border-gray-100 border-2 p-2 outline-0 print:hidden" />}</div>
+    return <div className="flex flex-col h-full">
+        <Toolbar editor={editor}/>
+        <div className="flex-1 min-h-0">
+            {text!==undefined&& <Editor value={text} language="markdown" height="100%" options={{wordWrap:'on'}}
+                                        onMount={(instance, monaco) => {setEditor(instance); registerShortcuts(instance, monaco)}}
+                                        onChange={(e)=>{dispatch(commonActions.setEditorText(e as string))}} theme='light'
+                                        className="rounded-2xl border-gray-100 border-2 p-2 outline-0 print:hidden" />}
+        </div>
+    </div>
 }
