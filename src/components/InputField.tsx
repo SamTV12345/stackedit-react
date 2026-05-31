@@ -1,11 +1,9 @@
 import {commonActions} from "../slices/CommonSlice";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import Editor from "@monaco-editor/react";
-import {getSampleFile} from "../hooks/getSampleFile";
-import {db} from "../database/Database";
-import {FC, useEffect, useState} from "react";
+import {loadInitialFile} from "../hooks/loadInitialFile";
+import {FC, useEffect} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
-import {Spinner} from "./Spinner";
 import {editor} from "monaco-editor";
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
@@ -24,23 +22,9 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
     },500,[text])
 
     useEffect(()=>{
-    if(currentFile===undefined){
-        db.count('file')
-            .then(c=> {
-                if (c === 0) {
-                    getSampleFile()
-                    return <Spinner/>
-                }
-                else{
-                    db.getAll('file').then(resp=>{
-                        const file = resp.reduce( (a, b) =>{
-                            return a.lastOpened > b.lastOpened ? a : b })
-                        dispatch(commonActions.setCurrentFile(file))
-                        dispatch(commonActions.setEditorText(file.content))
-                    })
-                }
-            })
-    }
+        if(currentFile===undefined){
+            loadInitialFile({dispatch})
+        }
     },[])
 
 
