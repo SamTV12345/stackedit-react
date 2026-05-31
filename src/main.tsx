@@ -10,63 +10,27 @@ import {Spinner} from "./components/Spinner";
 import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n/i18n";
 
+// App (and Monaco, which it sets up on mount) is only loaded for the editor route.
+const App = lazy(() => import("./App"));
 
+const AppPage = () => (
+    <Suspense fallback={<Spinner/>}>
+        <App/>
+    </Suspense>
+);
 
-const init = async () => {
-    const loader =  await import("@monaco-editor/loader");
-    const monaco = await import("monaco-editor")
-    const editorWorker = await import("monaco-editor/esm/vs/editor/editor.worker?worker")
-    const jsonWorker = await import("monaco-editor/esm/vs/language/json/json.worker?worker")
-    const cssWorker = await import("monaco-editor/esm/vs/language/css/css.worker?worker")
-    const htmlWorker = await import("monaco-editor/esm/vs/language/html/html.worker?worker")
-    const tsWorker = await import("monaco-editor/esm/vs/language/typescript/ts.worker?worker")
-
-    self.MonacoEnvironment = {
-        getWorker(_, label) {
-            if (label === "json") {
-                return new jsonWorker.default()
-            }
-            if (label === "css" || label === "scss" || label === "less") {
-                return new cssWorker.default()
-            }
-            if (label === "html" || label === "handlebars" || label === "razor") {
-                return new htmlWorker.default()
-            }
-            if (label === "typescript" || label === "javascript") {
-                return new tsWorker.default()
-            }
-            return new editorWorker.default()
-        }
-    }
-    loader.default.config({monaco});
-}
-
-init()
-    .then(()=> {
-
-        const App = lazy(() => import("./App"));
-
-        const AppPage = () => (
-            <Suspense fallback={<Spinner/>}>
-                <App/>
-            </Suspense>
-        );
-
-
-
-        ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-        <React.StrictMode>
-            <I18nextProvider i18n={i18n}>
-                <Provider store={store}>
-                    <HashRouter basename={"/"}>
-                        <Routes>
-                            <Route path={"/app"} element={<AppPage/>}/>
-                            <Route path={"/privacy"} element={<PrivacyPolicy/>}/>
-                            <Route path={"/"} element={<WelcomeScreen/>}/>
-                        </Routes>
-                    </HashRouter>
-                </Provider>
-            </I18nextProvider>
-            </React.StrictMode>
-        )
-    })
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <React.StrictMode>
+        <I18nextProvider i18n={i18n}>
+            <Provider store={store}>
+                <HashRouter basename={"/"}>
+                    <Routes>
+                        <Route path={"/app"} element={<AppPage/>}/>
+                        <Route path={"/privacy"} element={<PrivacyPolicy/>}/>
+                        <Route path={"/"} element={<WelcomeScreen/>}/>
+                    </Routes>
+                </HashRouter>
+            </Provider>
+        </I18nextProvider>
+    </React.StrictMode>
+)

@@ -1,4 +1,4 @@
-import React, {FC, MutableRefObject, Ref, RefObject, useEffect} from 'react';
+import React, {FC, RefObject, useMemo} from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from "remark-gfm";
@@ -6,54 +6,59 @@ import remarkMath from "remark-math";
 import 'katex/dist/katex.min.css'
 import rehypeKatex from "rehype-katex";
 import {useAppSelector} from "../store/hooks";
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import remarkMermaid from 'rehype-mermaid';
+import {PrismAsync as SyntaxHighlighter} from 'react-syntax-highlighter'
 import "../css/markdown.css"
-import { remark } from 'remark';
 import {Spinner} from "./Spinner";
+import {Mermaid} from "./Mermaid";
+import {getCodeLanguage} from "../utils/codeLanguage";
 
 interface MarkdownViewerProps {
     refObj: RefObject<HTMLDivElement>
 }
 
-export const MarkdownViewer:FC<MarkdownViewerProps> = ({refObj})=>{
-    const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
+// react-syntax-highlighter (PrismAsync) loads each language grammar on demand,
+// and mermaid is rendered via a lazily-imported component, so neither is bundled
+// into the eager path.
+const markdownComponents = {
+    code({className, children, ...props}: any) {
+        const language = getCodeLanguage(className)
+        const value = String(children).replace(/\n$/, '')
 
-    if(currentFile === undefined){
-        return <Spinner/>
+        if (language === 'mermaid') {
+            return <Mermaid chart={value}/>
+        }
+        if (language) {
+            return <SyntaxHighlighter language={language} PreTag="div">{value}</SyntaxHighlighter>
+        }
+        return <code className={className} {...props}>{children}</code>
     }
+}
 
-    const handle =  (node: any, error: string):any =>{
-        console.log(error)
-        console.log(node.position)
-        node.value=error
-        return node.value==="mermaid"?{type:"html",value:''}:node
+const remarkPlugins = [remarkMath, remarkGfm]
+const rehypePlugins = [rehypeKatex, rehypeRaw]
+
+const MarkdownViewerImpl: FC<MarkdownViewerProps> = ({refObj}) => {
+    const currentFile = useAppSelector(state => state.commonReducer.currentFile?.content)
+
+    // Components/plugin arrays are module constants, but memo keeps referential
+    // stability obvious and lets React.memo short-circuit unchanged renders.
+    const components = useMemo(() => markdownComponents, [])
+
+    if (currentFile === undefined) {
+        return <Spinner/>
     }
 
     return (
         <div className="overflow-y-scroll" ref={refObj}>
-        <ReactMarkdown className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer"
-                       children={currentFile}
-                       components={{
-                            code({node,inlist, className, children, ...props}) {
-                               const match = /language-(\w+)/.exec(className || '')
-                               return !inlist && match ? (
-                                   <SyntaxHighlighter
-                                       children={String(children).replace(/\n$/, '') as string}
-                                       language={match[1]}
-                                       PreTag="div"
-                                   />
-                               ) : (
-                                   <code className={className} {...props}>
-                                       {children}
-                                   </code>
-                               )
-                           }
-                       }}
-                           remarkPlugins={[remarkMath, remarkGfm, [remarkMermaid, { onError : 'fallback', errorFallback:handle }]]}
-            rehypePlugins={[rehypeKatex,rehypeRaw]}
-        />
+            <ReactMarkdown
+                className="max-h-100 grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer"
+                children={currentFile}
+                components={components}
+                remarkPlugins={remarkPlugins}
+                rehypePlugins={rehypePlugins}
+            />
         </div>)
-
 }
+
+export const MarkdownViewer = React.memo(MarkdownViewerImpl)
 export default MarkdownViewer
