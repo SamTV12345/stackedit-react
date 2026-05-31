@@ -2,10 +2,12 @@ import {commonActions} from "../slices/CommonSlice";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import Editor from "@monaco-editor/react";
 import {loadInitialFile} from "../hooks/loadInitialFile";
-import {FC, useEffect} from "react";
+import {FC, useEffect, useState} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
-import {editor} from "monaco-editor";
-import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
+import {Spinner} from "./Spinner";
+import {setupMonaco} from "../utils/setupMonaco";
+import type {editor} from "monaco-editor";
+type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
 interface InputFieldProps {
     editor: IStandaloneCodeEditor|undefined,
@@ -16,10 +18,17 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
     const dispatch = useAppDispatch()
     const text = useAppSelector(state=>state.commonReducer.text)
+    const [monacoReady, setMonacoReady] = useState(false)
 
     useDebounce(()=>{
         dispatch(commonActions.setText(text))
     },500,[text])
+
+    useEffect(()=>{
+        let active = true
+        setupMonaco().then(()=>{ if(active) setMonacoReady(true) })
+        return ()=>{ active = false }
+    },[])
 
     useEffect(()=>{
         if(currentFile===undefined){
@@ -27,6 +36,9 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
         }
     },[])
 
+    if(!monacoReady){
+        return <Spinner/>
+    }
 
     return <div>{text!==undefined&& <Editor value={text} language="markdown" options={{wordWrap:'on'}}
                                             onMount={(editor, monaco) => {setEditor(editor)}}

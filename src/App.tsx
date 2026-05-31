@@ -5,16 +5,16 @@ import {Header} from "./components/Header";
 import {SettingsMenu} from "./components/SettingsMenu";
 import {FileViewer} from "./components/FileViewer";
 import {Alert} from "./components/Alert";
-import React, {createRef, useEffect, useRef, useState} from "react";
-import {editor} from "monaco-editor";
-import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
+import {useRef, useState} from "react";
+import type {editor} from "monaco-editor";
+type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 import {throttle} from "./utils/throttle";
 import {useAppSelector} from "./store/hooks";
 import {store} from "./store/store";
 
 const App = ()=> {
     const [editor, setEditor] = useState<IStandaloneCodeEditor|undefined>(undefined)
-    const viewerRef = createRef<HTMLDivElement>()
+    const viewerRef = useRef<HTMLDivElement>(null)
 
     const doEditorScroll = ()=>{
        if(!store.getState().commonReducer.scrollSync){
