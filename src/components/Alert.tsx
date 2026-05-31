@@ -27,7 +27,7 @@ export const Alert = ()=>{
     const colorClasses = ALERT_CLASSES[type] ?? ALERT_CLASSES[AlertTypes.SUCCESS]
 
     return createPortal(
-        <div className={`${open ? 'md:block' : 'hidden'} absolute bottom-10 right-10 border-l-4 p-4 rounded ${colorClasses}`} role="alert">
+        <div className={`${open ? 'md:block' : 'hidden'} absolute bottom-10 right-10 border-l-4 p-4 rounded-sm ${colorClasses}`} role="alert">
             <p className="font-bold">{title}</p>
             <p>{message}</p>
     </div>, document.getElementById('alert') as Element)
