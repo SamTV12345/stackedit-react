@@ -2,7 +2,7 @@ import logo from '../logo/img.png'
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {commonActions} from "../slices/CommonSlice";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import { faFloppyDisk, faListUl } from '@fortawesome/free-solid-svg-icons'
 import {updateFile} from "../database/FileLib";
 import {FileNameInputField} from "./FileNameInputField";
 import {useEffect, useState} from "react";
@@ -49,6 +49,11 @@ export const Header = ()=>{
 
     return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full print:hidden gap-4">
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
+        <button type="button" title={t('outline-toggle')} aria-label={t('outline-toggle')}
+                onClick={()=>dispatch(commonActions.toggleOutline())}
+                className="text-white h-8 w-8 flex items-center justify-center rounded-sm hover:bg-slate-700 cursor-pointer">
+            <FontAwesomeIcon icon={faListUl}/>
+        </button>
         <div onClick={()=>{
             navigator.clipboard.writeText(currentFile?.content)
                 .then(()=>{
