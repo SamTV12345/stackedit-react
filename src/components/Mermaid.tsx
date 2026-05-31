@@ -36,8 +36,17 @@ export const Mermaid: FC<MermaidProps> = ({chart}) => {
     }, [chart])
 
     if (error) {
-        return <pre className="text-red-600 text-sm whitespace-pre-wrap" data-testid="mermaid-error">{error}</pre>
+        return <pre className="my-3 rounded-md bg-red-50 p-3 text-sm whitespace-pre-wrap text-red-600" data-testid="mermaid-error">{error}</pre>
     }
 
-    return <div ref={containerRef} className="mermaid" data-testid="mermaid" dangerouslySetInnerHTML={{__html: svg}}/>
+    // text-center centers narrow diagrams; overflow-x-auto lets wide ones scroll
+    // (the rendered <svg> is inline, so both behaviours work on one container).
+    return (
+        <div
+            ref={containerRef}
+            className="mermaid my-3 overflow-x-auto text-center"
+            data-testid="mermaid"
+            dangerouslySetInnerHTML={{__html: svg}}
+        />
+    )
 }
