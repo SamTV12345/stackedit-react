@@ -8,36 +8,57 @@ import {Alert} from "./components/Alert";
 import {SplitPane} from "./components/SplitPane";
 import {Outline} from "./components/Outline";
 import {CommandPalette} from "./components/CommandPalette";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
-import {throttle} from "./utils/throttle";
 import {useAppSelector} from "./store/hooks";
 import {store} from "./store/store";
+import {proportionalScrollTop} from "./utils/scrollSync";
 
 const App = ()=> {
     const [editor, setEditor] = useState<IStandaloneCodeEditor|undefined>(undefined)
     const viewerRef = useRef<HTMLDivElement>(null)
     const outlineOpen = useAppSelector(state=>state.commonReducer.outlineOpen)
+    // The preview only renders its scroll container once a file is loaded; track
+    // that so the scroll-sync effect re-runs and attaches its listeners then.
+    const previewReady = useAppSelector(state=>state.commonReducer.currentFile?.content !== undefined)
 
-    const doEditorScroll = ()=>{
-       if(!store.getState().commonReducer.scrollSync){
-           return
-       }
-        const contentInTopLine = editor?.getModel()?.getLineContent(Number(editor?.getVisibleRanges()[0].startLineNumber))
-        if(contentInTopLine && contentInTopLine.trim() === ""){
+    // Bidirectional, proportional scroll sync between the editor and the preview.
+    // Whichever pane the user scrolls drives the other; a lock prevents the
+    // programmatic scroll from echoing back into a feedback loop.
+    useEffect(()=>{
+        const preview = viewerRef.current
+        if(!editor || !preview){
             return
         }
+        let locked = false
+        const withLock = (apply:()=>void)=>{
+            locked = true
+            apply()
+            requestAnimationFrame(()=>{ locked = false })
+        }
+        const enabled = ()=> store.getState().commonReducer.scrollSync
 
-        const res = document.querySelector('[data-sourcepos^="'+editor?.getVisibleRanges()[0].startLineNumber+':1"'+"]")
+        const editorToPreview = ()=>{
+            if(locked || !enabled()){ return }
+            const editorMax = editor.getScrollHeight() - editor.getLayoutInfo().height
+            const previewMax = preview.scrollHeight - preview.clientHeight
+            withLock(()=>{ preview.scrollTop = proportionalScrollTop(editor.getScrollTop(), editorMax, previewMax) })
+        }
+        const previewToEditor = ()=>{
+            if(locked || !enabled()){ return }
+            const previewMax = preview.scrollHeight - preview.clientHeight
+            const editorMax = editor.getScrollHeight() - editor.getLayoutInfo().height
+            withLock(()=> editor.setScrollTop(proportionalScrollTop(preview.scrollTop, previewMax, editorMax)))
+        }
 
-        res?.scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
-    }
-    const throttledEditorScroll = throttle(doEditorScroll, 100)
-
-    editor?.onDidScrollChange((e)=>{
-            throttledEditorScroll()
-    })
+        const disposable = editor.onDidScrollChange(editorToPreview)
+        preview.addEventListener('scroll', previewToEditor)
+        return ()=>{
+            disposable.dispose()
+            preview.removeEventListener('scroll', previewToEditor)
+        }
+    },[editor, previewReady])
 
   return (
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2 print:h-auto print:grid-cols-none print:grid-rows-none">
