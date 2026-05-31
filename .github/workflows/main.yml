@@ -6,10 +6,20 @@ on:
   pull_request:
     branches:
       - main
+
+# Permissions required by the GitHub Pages deployment (modern Actions flow).
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -44,26 +54,24 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192
         run: npm run build
 
-      - name: Upload build artifact
+      - name: Setup Pages
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
           path: dist
 
   deploy:
-    needs: test
+    needs: build
     if: github.event_name == 'push'
-    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
