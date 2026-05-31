@@ -45,3 +45,14 @@ describe('CommonSlice save status', () => {
         expect(state.saveStatus).toBe('saved')
     })
 })
+
+describe('CommonSlice outline panel', () => {
+    it('is closed initially and toggles open/closed', () => {
+        let state = initial()
+        expect(state.outlineOpen).toBe(false)
+        state = commonReducer(state, commonActions.toggleOutline())
+        expect(state.outlineOpen).toBe(true)
+        state = commonReducer(state, commonActions.toggleOutline())
+        expect(state.outlineOpen).toBe(false)
+    })
+})
