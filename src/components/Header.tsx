@@ -14,6 +14,7 @@ import {RepoNameInputField} from "./RepoNameInputField";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {Dropdown} from "./Dropdown";
 import {downloadFileAsJson} from "../utils/download";
+import {SaveStatusIndicator} from "./SaveStatusIndicator";
 import {useTranslation} from "react-i18next";
 
 
@@ -71,6 +72,7 @@ export const Header = ()=>{
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" onClick={()=>downloadCurrentFile()} className="w-6 h-6 cursor-pointer">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
         </svg>
+        <SaveStatusIndicator/>
         <span className="text-white">Scroll Sync</span>
         <label className="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" checked={scrollSync} onChange={()=>{dispatch(commonActions.setScrollSync(!scrollSync))}} className="sr-only peer"/>

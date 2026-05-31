@@ -14,24 +14,51 @@ export  const saveFile = (content:string, name:string, optionalId?:string, optio
         return fileToSave
 }
 
-export const updateFile =(id:string, name:string,content:string)=>{
-        db.get("file",id).then(f=>{
-                if(f===undefined){
-                        console.log("Not found")
+interface PersistOptions {
+    // When true, persist without raising a confirmation/error toast (autosave).
+    silent?: boolean
+}
+
+// Persists a file's content to IndexedDB and keeps the save-status state in sync.
+// Used by both the manual save button (silent: false) and autosave (silent: true).
+export const persistFile = async (
+    id: string,
+    name: string,
+    content: string,
+    {silent = false}: PersistOptions = {},
+): Promise<void> => {
+        store.dispatch(commonActions.setSaveStatus('saving'))
+        try {
+                const f = await db.get("file", id)
+                if (f === undefined) {
+                        store.dispatch(commonActions.setSaveStatus('dirty'))
+                        if (!silent) {
+                                updatedFileErrored(name)
+                        }
                         return
                 }
-                f.content= content
+                f.content = content
                 f.name = name
                 f.lastOpened = new Date().toISOString()
-                db.put("file",f).then(()=>{
-                    const currentFiles = store.getState().commonReducer.files
-                    const filesWithCurrentIdRemoved = currentFiles.filter(f=>f.id!==id)
-                    store.dispatch(commonActions.setFiles([...filesWithCurrentIdRemoved,f]))
-                    updatedFile(f.name)
-                })
-            })
-            .catch(()=>updatedFileErrored(name))
+                await db.put("file", f)
+
+                const currentFiles = store.getState().commonReducer.files
+                const filesWithCurrentIdRemoved = currentFiles.filter(other => other.id !== id)
+                store.dispatch(commonActions.setFiles([...filesWithCurrentIdRemoved, f]))
+                store.dispatch(commonActions.markSaved(content))
+                if (!silent) {
+                        updatedFile(f.name)
+                }
+        } catch {
+                store.dispatch(commonActions.setSaveStatus('dirty'))
+                if (!silent) {
+                        updatedFileErrored(name)
+                }
+        }
 }
+
+export const updateFile = (id:string, name:string, content:string) =>
+        persistFile(id, name, content, {silent: false})
 
 function updateFiles(id: string, f: File) {
     // Edit file redux store

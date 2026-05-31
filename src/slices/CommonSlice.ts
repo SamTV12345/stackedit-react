@@ -8,13 +8,18 @@ export interface File{
     repo?:string
 }
 
+export type SaveStatus = 'saved' | 'dirty' | 'saving'
+
 interface CommonSliceProp {
     text:string,
     settingsMenuOpen: boolean
     files: File[],
     fileMenuOpen: boolean,
     currentFile:File|undefined,
-    scrollSync: boolean
+    scrollSync: boolean,
+    // Content currently persisted in IndexedDB, used to derive the dirty state.
+    savedContent: string,
+    saveStatus: SaveStatus,
 }
 
 const initialState:CommonSliceProp = {
@@ -23,7 +28,9 @@ const initialState:CommonSliceProp = {
     files: [],
     fileMenuOpen: false,
     currentFile: undefined,
-    scrollSync: localStorage.getItem('scrollSync')==='true'
+    scrollSync: localStorage.getItem('scrollSync')==='true',
+    savedContent: '',
+    saveStatus: 'saved',
 }
 
 export const commonSlice = createSlice({
@@ -51,9 +58,21 @@ export const commonSlice = createSlice({
         },
         setCurrentFile: (state, action:PayloadAction<File>)=>{
             state.currentFile = action.payload
+            state.savedContent = action.payload.content
+            state.saveStatus = 'saved'
         },
         setEditorText: (state, action:PayloadAction<string>)=>{
             state.text = action.payload
+            if(state.saveStatus !== 'saving'){
+                state.saveStatus = action.payload === state.savedContent ? 'saved' : 'dirty'
+            }
+        },
+        setSaveStatus: (state, action:PayloadAction<SaveStatus>)=>{
+            state.saveStatus = action.payload
+        },
+        markSaved: (state, action:PayloadAction<string>)=>{
+            state.savedContent = action.payload
+            state.saveStatus = 'saved'
         },
         setRepoName: (state, action) => {
             if(state.currentFile!==undefined) {
