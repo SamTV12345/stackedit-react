@@ -7,6 +7,7 @@ import {FileViewer} from "./components/FileViewer";
 import {Alert} from "./components/Alert";
 import {SplitPane} from "./components/SplitPane";
 import {Outline} from "./components/Outline";
+import {CommandPalette} from "./components/CommandPalette";
 import {useRef, useState} from "react";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
@@ -53,6 +54,7 @@ const App = ()=> {
           </div>
           <SettingsMenu/>
           <FileViewer/>
+          <CommandPalette editor={editor}/>
           <Alert/>
       </div>
   )
