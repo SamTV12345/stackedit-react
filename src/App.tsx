@@ -5,6 +5,9 @@ import {Header} from "./components/Header";
 import {SettingsMenu} from "./components/SettingsMenu";
 import {FileViewer} from "./components/FileViewer";
 import {Alert} from "./components/Alert";
+import {SplitPane} from "./components/SplitPane";
+import {Outline} from "./components/Outline";
+import {CommandPalette} from "./components/CommandPalette";
 import {useRef, useState} from "react";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
@@ -15,6 +18,7 @@ import {store} from "./store/store";
 const App = ()=> {
     const [editor, setEditor] = useState<IStandaloneCodeEditor|undefined>(undefined)
     const viewerRef = useRef<HTMLDivElement>(null)
+    const outlineOpen = useAppSelector(state=>state.commonReducer.outlineOpen)
 
     const doEditorScroll = ()=>{
        if(!store.getState().commonReducer.scrollSync){
@@ -38,14 +42,19 @@ const App = ()=> {
   return (
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2 print:h-auto print:grid-cols-none print:grid-rows-none">
           <Header/>
-          <div className="col-span-2 pl-6 overflow-hidden print:overflow-visible">
-              <div className="grid grid-cols-2 h-full gap-2 pb-2 print:h-auto">
-                  <InputField editor={editor} setEditor={(e)=>setEditor(e)}/>
-                  <MarkdownViewer refObj={viewerRef}/>
+          <div className="col-span-2 flex overflow-hidden print:overflow-visible print:block">
+              {outlineOpen && <Outline editor={editor}/>}
+              <div className="flex-1 min-w-0 pl-6 pr-6 print:px-0">
+                  <SplitPane
+                      storageKey="editorSplitRatio"
+                      left={<InputField editor={editor} setEditor={(e)=>setEditor(e)}/>}
+                      right={<MarkdownViewer refObj={viewerRef}/>}
+                  />
               </div>
           </div>
           <SettingsMenu/>
           <FileViewer/>
+          <CommandPalette editor={editor}/>
           <Alert/>
       </div>
   )

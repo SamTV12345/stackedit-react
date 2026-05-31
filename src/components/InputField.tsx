@@ -6,6 +6,7 @@ import {FC, useEffect, useState} from "react";
 import {useDebounce} from "../hooks/DebounceHook";
 import {Spinner} from "./Spinner";
 import {setupMonaco} from "../utils/setupMonaco";
+import {persistFile} from "../database/FileLib";
 import {Toolbar} from "./Toolbar";
 import {applyTransform} from "../utils/applyTransform";
 import {insertLink, toggleWrap} from "../utils/markdownFormat";
@@ -19,6 +20,8 @@ interface InputFieldProps {
 
 export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
     const currentFile = useAppSelector(state=>state.commonReducer.currentFile?.content)
+    const currentFileMeta = useAppSelector(state=>state.commonReducer.currentFile)
+    const saveStatus = useAppSelector(state=>state.commonReducer.saveStatus)
     const dispatch = useAppDispatch()
     const text = useAppSelector(state=>state.commonReducer.text)
     const [monacoReady, setMonacoReady] = useState(false)
@@ -26,6 +29,13 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
     useDebounce(()=>{
         dispatch(commonActions.setText(text))
     },500,[text])
+
+    // Autosave: persist silently to IndexedDB a short while after typing stops.
+    useDebounce(()=>{
+        if(currentFileMeta && saveStatus === 'dirty'){
+            persistFile(currentFileMeta.id, currentFileMeta.name, text, {silent: true})
+        }
+    },1500,[text])
 
     useEffect(()=>{
         let active = true

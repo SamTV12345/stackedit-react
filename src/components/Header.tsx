@@ -2,7 +2,7 @@ import logo from '../logo/img.png'
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {commonActions} from "../slices/CommonSlice";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import { faFloppyDisk, faListUl } from '@fortawesome/free-solid-svg-icons'
 import {updateFile} from "../database/FileLib";
 import {FileNameInputField} from "./FileNameInputField";
 import {useEffect, useState} from "react";
@@ -14,6 +14,7 @@ import {RepoNameInputField} from "./RepoNameInputField";
 import {alertActions, AlertTypes} from "../slices/AlertSlice";
 import {Dropdown} from "./Dropdown";
 import {downloadFileAsJson} from "../utils/download";
+import {SaveStatusIndicator} from "./SaveStatusIndicator";
 import {useTranslation} from "react-i18next";
 
 
@@ -48,6 +49,11 @@ export const Header = ()=>{
 
     return <div className="col-span-2 bg-slate-900 h-12 flex items-center w-full print:hidden gap-4">
         <div className="text-white text-2xl m-2" onClick={()=>{dispatch(commonActions.setFileMenuOpen(true))}}>StackEdit-React</div>
+        <button type="button" title={t('outline-toggle')} aria-label={t('outline-toggle')}
+                onClick={()=>dispatch(commonActions.toggleOutline())}
+                className="text-white h-8 w-8 flex items-center justify-center rounded-sm hover:bg-slate-700 cursor-pointer">
+            <FontAwesomeIcon icon={faListUl}/>
+        </button>
         <div onClick={()=>{
             navigator.clipboard.writeText(currentFile?.content)
                 .then(()=>{
@@ -71,6 +77,7 @@ export const Header = ()=>{
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" onClick={()=>downloadCurrentFile()} className="w-6 h-6 cursor-pointer">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
         </svg>
+        <SaveStatusIndicator/>
         <span className="text-white">Scroll Sync</span>
         <label className="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" checked={scrollSync} onChange={()=>{dispatch(commonActions.setScrollSync(!scrollSync))}} className="sr-only peer"/>
