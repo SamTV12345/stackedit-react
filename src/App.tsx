@@ -5,6 +5,7 @@ import {Header} from "./components/Header";
 import {SettingsMenu} from "./components/SettingsMenu";
 import {FileViewer} from "./components/FileViewer";
 import {Alert} from "./components/Alert";
+import {SplitPane} from "./components/SplitPane";
 import {useRef, useState} from "react";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
@@ -38,11 +39,12 @@ const App = ()=> {
   return (
       <div className="grid grid-rows-[auto_1fr] h-screen gap-2 print:h-auto print:grid-cols-none print:grid-rows-none">
           <Header/>
-          <div className="col-span-2 pl-6 overflow-hidden print:overflow-visible">
-              <div className="grid grid-cols-2 h-full gap-2 pb-2 print:h-auto">
-                  <InputField editor={editor} setEditor={(e)=>setEditor(e)}/>
-                  <MarkdownViewer refObj={viewerRef}/>
-              </div>
+          <div className="col-span-2 pl-6 pr-6 overflow-hidden print:overflow-visible print:px-0">
+              <SplitPane
+                  storageKey="editorSplitRatio"
+                  left={<InputField editor={editor} setEditor={(e)=>setEditor(e)}/>}
+                  right={<MarkdownViewer refObj={viewerRef}/>}
+              />
           </div>
           <SettingsMenu/>
           <FileViewer/>
