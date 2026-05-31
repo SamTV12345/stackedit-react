@@ -20,6 +20,7 @@ interface CommonSliceProp {
     // Content currently persisted in IndexedDB, used to derive the dirty state.
     savedContent: string,
     saveStatus: SaveStatus,
+    outlineOpen: boolean,
 }
 
 const initialState:CommonSliceProp = {
@@ -31,6 +32,7 @@ const initialState:CommonSliceProp = {
     scrollSync: localStorage.getItem('scrollSync')==='true',
     savedContent: '',
     saveStatus: 'saved',
+    outlineOpen: false,
 }
 
 export const commonSlice = createSlice({
@@ -73,6 +75,12 @@ export const commonSlice = createSlice({
         markSaved: (state, action:PayloadAction<string>)=>{
             state.savedContent = action.payload
             state.saveStatus = 'saved'
+        },
+        toggleOutline: (state)=>{
+            state.outlineOpen = !state.outlineOpen
+        },
+        setOutlineOpen: (state, action:PayloadAction<boolean>)=>{
+            state.outlineOpen = action.payload
         },
         setRepoName: (state, action) => {
             if(state.currentFile!==undefined) {
