@@ -51,7 +51,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.7",
     "fake-indexeddb": "^6.2.5",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "npm-check-updates": "^22.2.1",
     "postcss": "^8.4.31",
     "prop-types": "^15.8.1",
