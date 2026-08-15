@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {detectLanguage, resolveInitialRtl, RTL_STORAGE_KEY} from "../utils/rtl";
 
 export interface File{
     lastOpened: string,
@@ -22,6 +23,8 @@ interface CommonSliceProp {
     saveStatus: SaveStatus,
     outlineOpen: boolean,
     commandPaletteOpen: boolean,
+    // Right-to-left layout: preview left, editor right, both panes in RTL.
+    rtl: boolean,
 }
 
 const initialState:CommonSliceProp = {
@@ -35,6 +38,7 @@ const initialState:CommonSliceProp = {
     saveStatus: 'saved',
     outlineOpen: false,
     commandPaletteOpen: false,
+    rtl: resolveInitialRtl(localStorage.getItem(RTL_STORAGE_KEY), detectLanguage()),
 }
 
 export const commonSlice = createSlice({
@@ -91,6 +95,10 @@ export const commonSlice = createSlice({
             if(state.currentFile!==undefined) {
                 state.currentFile.repo = action.payload
             }
+        },
+        setRtl: (state, action:PayloadAction<boolean>)=>{
+            state.rtl = action.payload
+            localStorage.setItem(RTL_STORAGE_KEY, action.payload.toString())
         },
         setScrollSync: (state, action:PayloadAction<boolean>)=>{
             state.scrollSync = action.payload

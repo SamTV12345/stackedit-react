@@ -22,6 +22,7 @@ export const CommandPalette: FC<CommandPaletteProps> = ({editor}) => {
     const open = useAppSelector(state => state.commonReducer.commandPaletteOpen)
     const currentFile = useAppSelector(state => state.commonReducer.currentFile)
     const scrollSync = useAppSelector(state => state.commonReducer.scrollSync)
+    const rtl = useAppSelector(state => state.commonReducer.rtl)
     const text = useAppSelector(state => state.commonReducer.text)
 
     const [query, setQuery] = useState('')
@@ -49,12 +50,13 @@ export const CommandPalette: FC<CommandPaletteProps> = ({editor}) => {
         {id: 'settings', title: t('cmd-settings'), run: () => dispatch(commonActions.setSettingsMenuOpen(true))},
         {id: 'toggle-scroll-sync', title: t('cmd-toggle-scroll-sync'), run: () => dispatch(commonActions.setScrollSync(!scrollSync))},
         {id: 'toggle-outline', title: t('cmd-toggle-outline'), run: () => dispatch(commonActions.toggleOutline())},
+        {id: 'toggle-rtl', title: t('cmd-toggle-rtl'), run: () => dispatch(commonActions.setRtl(!rtl))},
         {id: 'bold', title: t('format-bold'), run: () => applyTransform(editor, (v, s, e) => toggleWrap(v, s, e, '**'))},
         {id: 'italic', title: t('format-italic'), run: () => applyTransform(editor, (v, s, e) => toggleWrap(v, s, e, '*'))},
         {id: 'link', title: t('format-link'), run: () => applyTransform(editor, (v, s, e) => insertLink(v, s, e))},
         {id: 'find', title: t('format-find'), run: () => runEditorAction(editor, FIND_ACTION)},
         {id: 'replace', title: t('format-replace'), run: () => runEditorAction(editor, REPLACE_ACTION)},
-    ], [t, dispatch, currentFile, scrollSync, text, editor])
+    ], [t, dispatch, currentFile, scrollSync, rtl, text, editor])
 
     const filtered = filterCommands(commands, query)
 

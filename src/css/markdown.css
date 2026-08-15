@@ -162,3 +162,35 @@
     box-shadow: inset 0 -1px 0 #d0d7de;
     background: #f6f8fa;
 }
+
+/* ----- Right-to-left preview -----
+   The rules above use physical sides; mirror the ones that would otherwise
+   point the wrong way when the preview renders right-to-left. */
+[dir="rtl"] .markdown-viewer ul,
+[dir="rtl"] .markdown-viewer ol {
+    padding-left: 0;
+    padding-right: 2em;
+}
+
+[dir="rtl"] .markdown-viewer li.task-list-item,
+[dir="rtl"] .markdown-viewer li:has(> input[type="checkbox"]) {
+    margin-left: 0;
+    margin-right: -1.5em;
+}
+
+[dir="rtl"] .markdown-viewer input[type="checkbox"] {
+    margin-right: 0;
+    margin-left: 0.5em;
+}
+
+[dir="rtl"] .markdown-viewer blockquote {
+    border-left: 0;
+    border-right: 0.25em solid #d0d7de;
+}
+
+/* Code and diagrams are written left-to-right whatever the prose direction. */
+[dir="rtl"] .markdown-viewer pre,
+[dir="rtl"] .markdown-viewer .mermaid {
+    direction: ltr;
+    text-align: left;
+}
