@@ -1,17 +1,21 @@
-// Bounds for the editor/preview split, expressed as the left pane's fraction
-// of the container width.
+// Bounds for the editor/preview split, expressed as the leading pane's fraction
+// of the container width. The leading pane is the left one, or the right one
+// when the layout runs right-to-left.
 export const MIN_RATIO = 0.2
 export const MAX_RATIO = 0.8
 
 export const clampRatio = (ratio: number, min = MIN_RATIO, max = MAX_RATIO): number =>
     Math.min(max, Math.max(min, ratio))
 
-// Fraction (0..1) of the pointer's horizontal position within a container rect.
-export const ratioFromPointer = (clientX: number, rectLeft: number, rectWidth: number): number => {
+// Unclamped fraction (may be <0 or >1) of the pointer's horizontal position within a container rect.
+// The ratio always describes the leading pane, which is anchored to the right
+// edge in RTL, so the fraction is mirrored there.
+export const ratioFromPointer = (clientX: number, rectLeft: number, rectWidth: number, rtl = false): number => {
     if (rectWidth <= 0) {
         return 0.5
     }
-    return (clientX - rectLeft) / rectWidth
+    const fraction = (clientX - rectLeft) / rectWidth
+    return rtl ? 1 - fraction : fraction
 }
 
 // Parse a persisted ratio string, clamping valid values and falling back when

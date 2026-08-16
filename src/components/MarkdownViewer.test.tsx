@@ -18,4 +18,14 @@ describe('MarkdownViewer', () => {
         // Without h-full the scroller grows to content height and never scrolls.
         expect(scroller).toHaveClass('h-full')
     })
+
+    it('renders the preview right-to-left when the RTL layout is on', () => {
+        const ref = createRef<HTMLDivElement>()
+        const { store } = renderWithStore(<MarkdownViewer refObj={ref} />)
+        act(() => { store.dispatch(commonActions.setCurrentFile(file)) })
+
+        expect(ref.current).toHaveAttribute('dir', 'ltr')
+        act(() => { store.dispatch(commonActions.setRtl(true)) })
+        expect(ref.current).toHaveAttribute('dir', 'rtl')
+    })
 })

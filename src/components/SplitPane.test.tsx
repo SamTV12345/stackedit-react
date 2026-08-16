@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { SplitPane } from './SplitPane'
 
-const renderPane = (storageKey = 'test-split') =>
-    render(<SplitPane storageKey={storageKey} left={<div>LEFT PANE</div>} right={<div>RIGHT PANE</div>} />)
+const renderPane = (storageKey = 'test-split', rtl = false) =>
+    render(<SplitPane storageKey={storageKey} rtl={rtl} left={<div>LEFT PANE</div>} right={<div>RIGHT PANE</div>} />)
 
 beforeEach(() => {
     localStorage.clear()
@@ -43,5 +43,26 @@ describe('SplitPane', () => {
         localStorage.setItem('saved-split', '0.3')
         renderPane('saved-split')
         expect(screen.getByTestId('split-divider')).toHaveAttribute('aria-valuenow', '30')
+    })
+})
+
+describe('SplitPane in RTL', () => {
+    it('mirrors the panes so the left node renders on the right', () => {
+        renderPane('rtl-split', true)
+        expect(screen.getByTestId('split-container')).toHaveClass('flex-row-reverse')
+    })
+
+    it('keeps the left-to-right pane order without the flag', () => {
+        renderPane()
+        expect(screen.getByTestId('split-container')).not.toHaveClass('flex-row-reverse')
+    })
+
+    it('mirrors the resize keys so ArrowLeft grows the leading pane', () => {
+        renderPane('rtl-keys', true)
+        const divider = screen.getByTestId('split-divider')
+        fireEvent.keyDown(divider, { key: 'ArrowLeft' })
+        expect(divider).toHaveAttribute('aria-valuenow', '52')
+        fireEvent.keyDown(divider, { key: 'ArrowRight' })
+        expect(divider).toHaveAttribute('aria-valuenow', '50')
     })
 })
