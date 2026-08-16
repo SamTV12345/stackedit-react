@@ -7,7 +7,7 @@ export const MAX_RATIO = 0.8
 export const clampRatio = (ratio: number, min = MIN_RATIO, max = MAX_RATIO): number =>
     Math.min(max, Math.max(min, ratio))
 
-// Fraction (0..1) of the pointer's horizontal position within a container rect.
+// Unclamped fraction (may be <0 or >1) of the pointer's horizontal position within a container rect.
 // The ratio always describes the leading pane, which is anchored to the right
 // edge in RTL, so the fraction is mirrored there.
 export const ratioFromPointer = (clientX: number, rectLeft: number, rectWidth: number, rtl = false): number => {
