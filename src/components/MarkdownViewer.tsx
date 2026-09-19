@@ -11,6 +11,7 @@ import {Spinner} from "./Spinner";
 import {Mermaid} from "./Mermaid";
 import {CodeBlock} from "./CodeBlock";
 import {getCodeLanguage} from "../utils/codeLanguage";
+import {directionOf} from "../utils/rtl";
 
 interface MarkdownViewerProps {
     refObj: RefObject<HTMLDivElement | null>
@@ -39,6 +40,7 @@ const rehypePlugins = [rehypeKatex, rehypeRaw]
 
 const MarkdownViewerImpl: FC<MarkdownViewerProps> = ({refObj}) => {
     const currentFile = useAppSelector(state => state.commonReducer.currentFile?.content)
+    const rtl = useAppSelector(state => state.commonReducer.rtl)
 
     // Components/plugin arrays are module constants, but memo keeps referential
     // stability obvious and lets React.memo short-circuit unchanged renders.
@@ -49,7 +51,7 @@ const MarkdownViewerImpl: FC<MarkdownViewerProps> = ({refObj}) => {
     }
 
     return (
-        <div className="h-full overflow-y-scroll print:h-auto print:overflow-visible" ref={refObj}>
+        <div className="h-full overflow-y-scroll print:h-auto print:overflow-visible" ref={refObj} dir={directionOf(rtl)}>
             {/* react-markdown v10 dropped the className prop; style a wrapper instead. */}
             <div className="min-h-full grid-none border-gray-100 border-2 rounded-2xl pl-4 pt-2 pb-2 pr-4 relative print:col-span-2 print:inline print:w-auto print:h-auto print:overflow-visible print:break-after-page print:absolute print:border-none markdown-viewer">
                 <ReactMarkdown

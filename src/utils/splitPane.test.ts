@@ -21,6 +21,10 @@ describe('ratioFromPointer', () => {
     it('falls back to centre for a zero-width container', () => {
         expect(ratioFromPointer(10, 0, 0)).toBe(0.5)
     })
+    it('measures from the right edge in RTL', () => {
+        expect(ratioFromPointer(500, 0, 1000, true)).toBe(0.5)
+        expect(ratioFromPointer(300, 100, 800, true)).toBeCloseTo(0.75)
+    })
 })
 
 describe('parseStoredRatio', () => {

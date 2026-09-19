@@ -5,13 +5,17 @@ interface SplitPaneProps {
     storageKey: string
     left: ReactNode
     right: ReactNode
+    rtl?: boolean
 }
 
 const KEYBOARD_STEP = 0.02
 
 // Two horizontally-resizable panes separated by a draggable divider. The left
-// pane's width fraction is persisted to localStorage under `storageKey`.
-export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right}) => {
+// pane's width fraction is persisted to localStorage under `storageKey`. With
+// `rtl` the panes are mirrored — `left` renders on the right — and the stored
+// fraction keeps describing that same pane, so toggling the direction does not
+// change how wide it is.
+export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right, rtl = false}) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [ratio, setRatio] = useState<number>(() => parseStoredRatio(localStorage.getItem(storageKey)))
     const [dragging, setDragging] = useState(false)
@@ -21,8 +25,8 @@ export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right}) => {
         if (!rect) {
             return
         }
-        setRatio(clampRatio(ratioFromPointer(clientX, rect.left, rect.width)))
-    }, [])
+        setRatio(clampRatio(ratioFromPointer(clientX, rect.left, rect.width, rtl)))
+    }, [rtl])
 
     useEffect(() => {
         if (!dragging) {
@@ -45,17 +49,18 @@ export const SplitPane: FC<SplitPaneProps> = ({storageKey, left, right}) => {
     }, [ratio, storageKey])
 
     const onKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'ArrowLeft') {
-            setRatio(r => clampRatio(r - KEYBOARD_STEP))
-            e.preventDefault()
-        } else if (e.key === 'ArrowRight') {
-            setRatio(r => clampRatio(r + KEYBOARD_STEP))
-            e.preventDefault()
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+            return
         }
+        // Mirrored panes mean the arrow that grows the leading pane flips too.
+        const grows = (e.key === 'ArrowRight') !== rtl
+        setRatio(r => clampRatio(grows ? r + KEYBOARD_STEP : r - KEYBOARD_STEP))
+        e.preventDefault()
     }
 
     return (
-        <div ref={containerRef} className="flex h-full w-full gap-2 pb-2 print:block print:h-auto">
+        <div ref={containerRef} data-testid="split-container"
+             className={`flex h-full w-full gap-2 pb-2 print:block print:h-auto ${rtl ? 'flex-row-reverse' : ''}`}>
             <div className="min-w-0 h-full grow-0 shrink-0 print:w-full" style={{flexBasis: `${ratio * 100}%`}}>
                 {left}
             </div>

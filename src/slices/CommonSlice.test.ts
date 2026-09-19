@@ -57,6 +57,17 @@ describe('CommonSlice outline panel', () => {
     })
 })
 
+describe('CommonSlice right-to-left layout', () => {
+    it('toggles the flag and remembers the choice', () => {
+        let state = commonReducer(initial(), commonActions.setRtl(true))
+        expect(state.rtl).toBe(true)
+        expect(localStorage.getItem('rtl')).toBe('true')
+        state = commonReducer(state, commonActions.setRtl(false))
+        expect(state.rtl).toBe(false)
+        expect(localStorage.getItem('rtl')).toBe('false')
+    })
+})
+
 describe('CommonSlice command palette', () => {
     it('is closed initially and can be opened/closed', () => {
         let state = initial()

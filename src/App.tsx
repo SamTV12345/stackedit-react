@@ -19,6 +19,7 @@ const App = ()=> {
     const [editor, setEditor] = useState<IStandaloneCodeEditor|undefined>(undefined)
     const viewerRef = useRef<HTMLDivElement>(null)
     const outlineOpen = useAppSelector(state=>state.commonReducer.outlineOpen)
+    const rtl = useAppSelector(state=>state.commonReducer.rtl)
     // The preview only renders its scroll container once a file is loaded; track
     // that so the scroll-sync effect re-runs and attaches its listeners then.
     const previewReady = useAppSelector(state=>state.commonReducer.currentFile?.content !== undefined)
@@ -68,6 +69,7 @@ const App = ()=> {
               <div className="flex-1 min-w-0 pl-6 pr-6 print:px-0">
                   <SplitPane
                       storageKey="editorSplitRatio"
+                      rtl={rtl}
                       left={<InputField editor={editor} setEditor={(e)=>setEditor(e)}/>}
                       right={<MarkdownViewer refObj={viewerRef}/>}
                   />

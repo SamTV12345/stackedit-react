@@ -102,6 +102,27 @@ a {
     color: #007bff;
 }
 
+/* Right-to-left editing. Monaco has no direction setting, so give the rendered
+   lines and the hidden input it types into a right-to-left base direction; the
+   browser's BiDi algorithm then handles punctuation and embedded LTR runs. Word
+   wrap is on, so the line boxes span the viewport. Alignment is spelled out per
+   line rather than left to `start`, so each line sits against the right edge of
+   its own full-width .view-line box. */
+.editor-rtl .monaco-editor .view-lines,
+.editor-rtl .monaco-editor .view-line,
+.editor-rtl .monaco-editor textarea.inputarea {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Monaco's minimap and overview ruler are overlays: the content area runs a
+   scrollbar's width (14px) underneath them at the right edge. That is harmless
+   left-to-right, where lines start at the left, but right-to-left it buries the
+   start of every line, so keep the text clear of that strip. */
+.editor-rtl .monaco-editor .view-line {
+  padding-right: 14px;
+}
+
 a[href=""]{
   pointer-events: none;
   cursor: default;

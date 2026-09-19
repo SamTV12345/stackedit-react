@@ -10,6 +10,7 @@ import {persistFile} from "../database/FileLib";
 import {Toolbar} from "./Toolbar";
 import {applyTransform} from "../utils/applyTransform";
 import {insertLink, toggleWrap} from "../utils/markdownFormat";
+import {directionOf} from "../utils/rtl";
 import type {editor} from "monaco-editor";
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 
@@ -24,6 +25,7 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
     const saveStatus = useAppSelector(state=>state.commonReducer.saveStatus)
     const dispatch = useAppDispatch()
     const text = useAppSelector(state=>state.commonReducer.text)
+    const rtl = useAppSelector(state=>state.commonReducer.rtl)
     const [monacoReady, setMonacoReady] = useState(false)
 
     useDebounce(()=>{
@@ -64,13 +66,18 @@ export const InputField:FC<InputFieldProps> = ({editor, setEditor})=>{
         return <Spinner/>
     }
 
-    return <div className="flex flex-col h-full">
+    // Monaco has no direction option, and it lays its own chrome (scrollbars,
+    // line margin, widgets) out assuming LTR, so the editor host stays LTR and
+    // only the rendered lines and the hidden input are flipped via `editor-rtl`.
+    // That is enough for the BiDi algorithm to place punctuation and embedded
+    // LTR runs where a right-to-left writer expects them.
+    return <div className="flex flex-col h-full" dir={directionOf(rtl)}>
         <Toolbar editor={editor}/>
-        <div className="flex-1 min-h-0">
+        <div className="flex-1 min-h-0" dir="ltr">
             {text!==undefined&& <Editor value={text} language="markdown" height="100%" options={{wordWrap:'on'}}
                                         onMount={(instance, monaco) => {setEditor(instance); registerShortcuts(instance, monaco)}}
                                         onChange={(e)=>{dispatch(commonActions.setEditorText(e as string))}} theme='light'
-                                        className="rounded-2xl border-gray-100 border-2 p-2 outline-0 print:hidden" />}
+                                        className={`rounded-2xl border-gray-100 border-2 p-2 outline-0 print:hidden ${rtl ? 'editor-rtl' : ''}`} />}
         </div>
     </div>
 }
