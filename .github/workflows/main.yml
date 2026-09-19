@@ -28,26 +28,19 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26
 
-      # Lockfiles are gitignored in this repo, so cache the npm download cache
-      # keyed on package.json rather than a (missing) package-lock.json.
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install
-        run: npm install
+        run: pnpm install
 
       - name: Type check
-        run: npx tsc --noEmit
+        run: pnpm run type-check
 
       - name: Test
-        run: npm test
+        run: pnpm run test
 
       - name: Build 🔧
         env:
