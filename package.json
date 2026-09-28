@@ -24,7 +24,7 @@
     "i18next": "^26.3.0",
     "i18next-browser-languagedetector": "^8.2.1",
     "idb": "^8.0.0",
-    "katex": "^0.18.1",
+    "katex": "^0.18.9",
     "mermaid": "^11.15.0",
     "monaco-editor": "^0.56.0",
     "react": "^19.2.6",
